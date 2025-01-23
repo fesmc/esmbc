@@ -31,6 +31,10 @@ module varslice
         integer  :: ndim 
         real(wp) :: time_par(3) 
 
+        character(len=1024) :: grid_filename
+        character(len=56)   :: grid_xnm
+        character(len=56)   :: grid_ynm
+        
     end type
 
     type varslice_class 
@@ -62,6 +66,17 @@ module varslice
     public :: varslice_end 
 
 contains
+
+    subroutine varslice_map_to_grid(vs_tgt,vs_src,mps)
+
+        implicit none
+
+        type(varslice_class), intent(INOUT) :: vs_tgt
+        type(varslice_class), intent(IN)    :: vs_src
+
+        return
+
+    end subroutine varslice_map_to_grid
 
     
     subroutine varslice_update(vs,time,method,fill,rep)
@@ -905,6 +920,19 @@ contains
         ! Get information from netcdf file 
         call nc_dims(vs%par%filename,vs%par%name,dim_names,vs%par%dim)
         vs%par%ndim = size(vs%par%dim,1)
+
+
+
+! ======== TO DO =============
+! In the case, of using nc_read_interp, data in arrays will have shape nx,ny
+! of target grid, not necessarily of input data file. Adjust dims here
+! based on target grid definition.
+
+        !call nc_read()
+
+
+! ============================
+
 
         if (with_time) then
 
