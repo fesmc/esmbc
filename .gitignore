@@ -2,3 +2,4 @@ Makefile
 *.o
 *.mod
 *.a
+*.x

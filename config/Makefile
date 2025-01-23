@@ -43,13 +43,41 @@ $(objdir)/ncio.o: $(srcdir)/ncio.f90
 $(objdir)/nml.o: $(srcdir)/nml.f90
 	$(FC) $(DFLAGS) $(FFLAGS) -c -o $@ $<
 
-$(objdir)/varslice.o: $(srcdir)/varslice.f90 $(objdir)/nml.o $(objdir)/ncio.o
+$(objdir)/varslice.o: $(srcdir)/varslice.f90 $(objdir)/nml.o $(objdir)/ncio.o $(objdir)/mapping_scrip.o
+	$(FC) $(DFLAGS) $(FFLAGS) -c -o $@ $<
+
+# coordinates-light
+
+$(objdir)/grid_to_cdo.o: $(srcdir)/coordinates-light/grid_to_cdo.f90
+	$(FC) $(DFLAGS) $(FFLAGS) -c -o $@ $<
+
+$(objdir)/gaussian_filter.o: $(srcdir)/coordinates-light/gaussian_filter.f90
+	$(FC) $(DFLAGS) $(FFLAGS) -c -o $@ $<
+
+$(objdir)/index.o: $(srcdir)/coordinates-light/index.f90
+	$(FC) $(DFLAGS) $(FFLAGS) -c -o $@ $<
+
+#$(objdir)/interp1D.o: $(srcdir)/coordinates-light/interp1D.f90 $(objdir)/yelmo_defs.o
+#	$(FC) $(DFLAGS) $(FFLAGS) -c -o $@ $<
+
+$(objdir)/interp2D.o: $(srcdir)/coordinates-light/interp2D.f90
+	$(FC) $(DFLAGS) $(FFLAGS) -c -o $@ $<
+
+$(objdir)/mapping_scrip.o: $(srcdir)/coordinates-light/mapping_scrip.f90 $(objdir)/ncio.o $(objdir)/interp2D.o \
+								$(objdir)/gaussian_filter.o $(objdir)/index.o $(objdir)/grid_to_cdo.o
 	$(FC) $(DFLAGS) $(FFLAGS) -c -o $@ $<
 
 esmbc_libs = 	$(objdir)/ismip6.o \
 				$(objdir)/nml.o \
 				$(objdir)/ncio.o \
-				$(objdir)/varslice.o
+				$(objdir)/varslice.o \
+				$(objdir)/grid_to_cdo.o \
+				$(objdir)/gaussian_filter.o \
+				$(objdir)/index.o \
+				$(objdir)/interp2D.o \
+				$(objdir)/mapping_scrip.o
+
+#				$(objdir)/interp1D.o \
 
 ###############################################
 ##

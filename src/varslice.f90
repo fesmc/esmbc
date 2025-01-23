@@ -3,6 +3,7 @@ module varslice
     use, intrinsic :: iso_fortran_env, only : input_unit, output_unit, error_unit
     use ncio 
     use nml 
+    use mapping_scrip
 
     implicit none 
 
@@ -71,9 +72,10 @@ contains
 
         implicit none
 
-        type(varslice_class), intent(INOUT) :: vs_tgt
-        type(varslice_class), intent(IN)    :: vs_src
-
+        type(varslice_class),  intent(INOUT) :: vs_tgt
+        type(varslice_class),  intent(IN)    :: vs_src
+        type(map_scrip_class), intent(IN)    :: mps
+        
         return
 
     end subroutine varslice_map_to_grid
