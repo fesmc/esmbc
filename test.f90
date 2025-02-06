@@ -47,10 +47,10 @@ end if
     ! ======================================================================
 
     ! Running Antarctica domain, load Antarctica specific parameters
-    call ismip6_experiment_def(iexp,"ctrlAE","ismip6_ant.nml","UCM","YELMO")
+    call ismip6_experiment_def(iexp,"ctrlAE","par/ismip6_ant.nml","UCM","YELMO")
 
     ! Initialize variables inside of ismip6 object 
-    call ismip6_forcing_init(ismp,"ismip6_ant.nml","Antarctica","ANT-32KM", &
+    call ismip6_forcing_init(ismp,"par/ismip6_ant.nml","Antarctica","ANT-32KM", &
                                 experiment=iexp%experiment,shlf_collapse=iexp%shlf_collapse)
     
     ! Print some information for static variables
@@ -91,11 +91,8 @@ end if
         call print_var_range(ismp%tf%var, "tf", mv,time) 
         write(*,*) 
 
-        if (time .eq. time_init) then 
-            call make_test_file_2("test.nc",ismp%tf%var(:,:,1,1),time,init=.TRUE.)
-        else 
-            call make_test_file_2("test.nc",ismp%tf%var(:,:,1,1),time,init=.FALSE.)
-        end if 
+        ! Write an output file
+        call make_test_file_2("test.nc",ismp%tf%var(:,:,1,1),time,init= (time .eq. time_init) )
 
     end do
 
@@ -155,7 +152,6 @@ contains
         ! Add time axis with current value 
         call nc_write_dim(filename,"time", x=1950.0_wp,dx=1.0_wp,nx=11,units="years",unlimited=.TRUE.)
         
-        
         nt = 11 
         allocate(var(3,3,nt))
 
@@ -180,8 +176,7 @@ contains
         logical,          intent(IN) :: init 
 
         ! Local variables
-        integer  :: nx, ny, n 
-        real(wp) :: time_prev 
+        integer  :: nx, ny, n, ncid
 
         nx = size(var,1) 
         ny = size(var,2) 
@@ -199,17 +194,20 @@ contains
         
         end if  
 
+        call nc_open(filename,ncid=ncid,writable=.TRUE.)
+
         ! Determine current writing time step 
-        n = nc_size(filename,"time")
-        call nc_read(filename,"time",time_prev,start=[n],count=[1]) 
-        if (abs(time-time_prev).gt.1e-5) n = n+1 
+        n = nc_time_index(filename,"time",time,ncid=ncid)
 
         ! Update the time step
-        call nc_write(filename,"time",time,dim1="time",start=[n],count=[1])
+        call nc_write(filename,"time",time,dim1="time",start=[n],count=[1],ncid=ncid)
 
         ! Write the variable
         call nc_write(filename,"var",var,dim1="xc",dim2="yc",dim3="time", &
-                                                start=[1,1,n],count=[nx,ny,1])
+                                                start=[1,1,n],count=[nx,ny,1],ncid=ncid)
+
+        ! Close the netcdf file
+        call nc_close(ncid)
 
         return 
 
