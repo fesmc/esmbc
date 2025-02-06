@@ -28,14 +28,9 @@ module varslice
         logical  :: with_time 
 
         ! Internal parameters
-        integer, allocatable :: dim(:)  
         integer  :: ndim 
         real(wp) :: time_par(3) 
 
-        character(len=1024) :: grid_filename
-        character(len=56)   :: grid_xnm
-        character(len=56)   :: grid_ynm
-        
     end type
 
     type varslice_class 
@@ -48,6 +43,7 @@ module varslice
         integer           :: range_rep 
         
         ! Variable information
+        integer,  allocatable :: dim(:)  
         real(wp), allocatable :: x(:) 
         real(wp), allocatable :: y(:)
         real(wp), allocatable :: z(:)  
@@ -75,7 +71,21 @@ contains
         type(varslice_class),  intent(INOUT) :: vs_tgt
         type(varslice_class),  intent(IN)    :: vs_src
         type(map_scrip_class), intent(IN)    :: mps
-        
+
+        ! Local variables
+        integer :: nx, ny 
+
+
+        ! Determine size of target grid
+        nx = mps%dst_grid_dims(1)
+        ny = mps%dst_grid_dims(2)
+
+        ! Initialize meta information
+        vs_tgt%par = vs_src%par
+
+        ! Re-allocate target varslice object
+
+
         return
 
     end subroutine varslice_map_to_grid
@@ -284,29 +294,29 @@ contains
                         case(2)
 
                             ! Allocate local var to the right size 
-                            allocate(var(par%dim(1),nt_now,1,1))
+                            allocate(var(vs%dim(1),nt_now,1,1))
 
                             ! 1D variable plus time dimension 
                             call nc_read(par%filename,par%name,var,missing_value=mv, &
-                                    start=[1,k0],count=[par%dim(1),nt_now])
+                                    start=[1,k0],count=[vs%dim(1),nt_now])
 
                         case(3)
         
                             ! Allocate local var to the right size 
-                            allocate(var(par%dim(1),par%dim(2),nt_now,1))
+                            allocate(var(vs%dim(1),vs%dim(2),nt_now,1))
 
                             ! 2D variable plus time dimension 
                             call nc_read(par%filename,par%name,var,missing_value=mv, &
-                                    start=[1,1,k0],count=[par%dim(1),par%dim(2),nt_now])
+                                    start=[1,1,k0],count=[vs%dim(1),vs%dim(2),nt_now])
 
                         case(4)
 
                             ! Allocate local var to the right size 
-                            allocate(var(par%dim(1),par%dim(2),par%dim(3),nt_now))
+                            allocate(var(vs%dim(1),vs%dim(2),vs%dim(3),nt_now))
 
                             ! 3D variable plus time dimension 
                             call nc_read(par%filename,par%name,var,missing_value=mv, &
-                                    start=[1,1,1,k0],count=[par%dim(1),par%dim(2),par%dim(3),nt_now]) 
+                                    start=[1,1,1,k0],count=[vs%dim(1),vs%dim(2),vs%dim(3),nt_now]) 
 
                         case DEFAULT 
 
@@ -920,8 +930,8 @@ contains
         call varslice_end(vs)
 
         ! Get information from netcdf file 
-        call nc_dims(vs%par%filename,vs%par%name,dim_names,vs%par%dim)
-        vs%par%ndim = size(vs%par%dim,1)
+        call nc_dims(vs%par%filename,vs%par%name,dim_names,vs%dim)
+        vs%par%ndim = size(vs%dim,1)
 
 
 
@@ -944,12 +954,12 @@ contains
                                    dx=vs%par%time_par(3))
 
             ! Check to make sure time vector matches netcdf file length 
-            if (size(vs%time,1) .ne. vs%par%dim(vs%par%ndim)) then 
+            if (size(vs%time,1) .ne. vs%dim(vs%par%ndim)) then 
                 write(*,*) "varslice_init_data:: Error: generated time coordinate &
                 &does not match the length of the time dimension in the netcdf file."
                 write(*,*) "time_par:    ", vs%par%time_par 
                 write(*,*) "size(time):  ", size(vs%time,1)
-                write(*,*) "nt (netcdf): ", vs%par%dim(vs%par%ndim)
+                write(*,*) "nt (netcdf): ", vs%dim(vs%par%ndim)
                 write(*,*) "filename:    ", trim(vs%par%filename)
                 stop 
             end if 
@@ -964,98 +974,98 @@ contains
                 if (with_time) then 
                     allocate(vs%var(1,1,1,1))
                 else 
-                    allocate(vs%var(vs%par%dim(1),1,1,1))
+                    allocate(vs%var(vs%dim(1),1,1,1))
                 end if 
             case(2)
                 if (with_time) then 
-                    allocate(vs%x(vs%par%dim(1)))
-                    allocate(vs%var(vs%par%dim(1),1,1,1))
+                    allocate(vs%x(vs%dim(1)))
+                    allocate(vs%var(vs%dim(1),1,1,1))
 
                     if (nc_exists_var(vs%par%filename,dim_names(1))) then 
                         call nc_read(vs%par%filename,dim_names(1),vs%x)
                     else
-                        call axis_init(vs%x,nx=vs%par%dim(1))
+                        call axis_init(vs%x,nx=vs%dim(1))
                     end if
                 else 
-                    allocate(vs%x(vs%par%dim(1)))
-                    allocate(vs%y(vs%par%dim(2)))
-                    allocate(vs%var(vs%par%dim(1),vs%par%dim(2),1,1))
+                    allocate(vs%x(vs%dim(1)))
+                    allocate(vs%y(vs%dim(2)))
+                    allocate(vs%var(vs%dim(1),vs%dim(2),1,1))
 
                     if (nc_exists_var(vs%par%filename,dim_names(1))) then 
                         call nc_read(vs%par%filename,dim_names(1),vs%x)
                     else
-                        call axis_init(vs%x,nx=vs%par%dim(1))
+                        call axis_init(vs%x,nx=vs%dim(1))
                     end if
                     if (nc_exists_var(vs%par%filename,dim_names(2))) then 
                         call nc_read(vs%par%filename,dim_names(2),vs%y)
                     else
-                        call axis_init(vs%y,nx=vs%par%dim(2))
+                        call axis_init(vs%y,nx=vs%dim(2))
                     end if
                     
                 end if 
 
             case(3)
                 if (with_time) then
-                    allocate(vs%x(vs%par%dim(1)))
-                    allocate(vs%y(vs%par%dim(2)))
-                    allocate(vs%var(vs%par%dim(1),vs%par%dim(2),1,1))
+                    allocate(vs%x(vs%dim(1)))
+                    allocate(vs%y(vs%dim(2)))
+                    allocate(vs%var(vs%dim(1),vs%dim(2),1,1))
 
                     if (nc_exists_var(vs%par%filename,dim_names(1))) then 
                         call nc_read(vs%par%filename,dim_names(1),vs%x)
                     else
-                        call axis_init(vs%x,nx=vs%par%dim(1))
+                        call axis_init(vs%x,nx=vs%dim(1))
                     end if
                     if (nc_exists_var(vs%par%filename,dim_names(2))) then 
                         call nc_read(vs%par%filename,dim_names(2),vs%y)
                     else
-                        call axis_init(vs%y,nx=vs%par%dim(2))
+                        call axis_init(vs%y,nx=vs%dim(2))
                     end if
                     
                 else 
-                    allocate(vs%x(vs%par%dim(1)))
-                    allocate(vs%y(vs%par%dim(2)))
-                    allocate(vs%z(vs%par%dim(3)))
-                    allocate(vs%var(vs%par%dim(1),vs%par%dim(2),vs%par%dim(3),1))
+                    allocate(vs%x(vs%dim(1)))
+                    allocate(vs%y(vs%dim(2)))
+                    allocate(vs%z(vs%dim(3)))
+                    allocate(vs%var(vs%dim(1),vs%dim(2),vs%dim(3),1))
 
                     if (nc_exists_var(vs%par%filename,dim_names(1))) then 
                         call nc_read(vs%par%filename,dim_names(1),vs%x)
                     else
-                        call axis_init(vs%x,nx=vs%par%dim(1))
+                        call axis_init(vs%x,nx=vs%dim(1))
                     end if
                     if (nc_exists_var(vs%par%filename,dim_names(2))) then 
                         call nc_read(vs%par%filename,dim_names(2),vs%y)
                     else
-                        call axis_init(vs%y,nx=vs%par%dim(2))
+                        call axis_init(vs%y,nx=vs%dim(2))
                     end if
                     if (nc_exists_var(vs%par%filename,dim_names(3))) then 
                         call nc_read(vs%par%filename,dim_names(3),vs%z)
                     else
-                        call axis_init(vs%z,nx=vs%par%dim(3))
+                        call axis_init(vs%z,nx=vs%dim(3))
                     end if
                     
                 end if
                   
             case(4)
                 if (with_time) then 
-                    allocate(vs%x(vs%par%dim(1)))
-                    allocate(vs%y(vs%par%dim(2)))
-                    allocate(vs%z(vs%par%dim(3)))
-                    allocate(vs%var(vs%par%dim(1),vs%par%dim(2),vs%par%dim(3),1))
+                    allocate(vs%x(vs%dim(1)))
+                    allocate(vs%y(vs%dim(2)))
+                    allocate(vs%z(vs%dim(3)))
+                    allocate(vs%var(vs%dim(1),vs%dim(2),vs%dim(3),1))
 
                     if (nc_exists_var(vs%par%filename,dim_names(1))) then 
                         call nc_read(vs%par%filename,dim_names(1),vs%x)
                     else
-                        call axis_init(vs%x,nx=vs%par%dim(1))
+                        call axis_init(vs%x,nx=vs%dim(1))
                     end if
                     if (nc_exists_var(vs%par%filename,dim_names(2))) then 
                         call nc_read(vs%par%filename,dim_names(2),vs%y)
                     else
-                        call axis_init(vs%y,nx=vs%par%dim(2))
+                        call axis_init(vs%y,nx=vs%dim(2))
                     end if
                     if (nc_exists_var(vs%par%filename,dim_names(3))) then 
                         call nc_read(vs%par%filename,dim_names(3),vs%z)
                     else
-                        call axis_init(vs%z,nx=vs%par%dim(3))
+                        call axis_init(vs%z,nx=vs%dim(3))
                     end if
                     
                 else 
@@ -1100,7 +1110,7 @@ contains
 
         type(varslice_class), intent(INOUT) :: vs 
 
-        if (allocated(vs%par%dim))  deallocate(vs%par%dim)
+        if (allocated(vs%dim))  deallocate(vs%dim)
         if (allocated(vs%x))        deallocate(vs%x)
         if (allocated(vs%y))        deallocate(vs%y)
         if (allocated(vs%z))      deallocate(vs%z)
