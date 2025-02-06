@@ -1,4 +1,6 @@
 Makefile
+ice_data
+fobos
 *.o
 *.mod
 *.a
