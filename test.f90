@@ -25,9 +25,9 @@ program test
     integer  :: n, k
 
     ! Testing methods on one varslice variable ==============
-if (.FALSE.) then 
+if (.TRUE.) then 
     call make_test_file("var_test.nc")
-    call varslice_init_nml(v1,"ismip6.nml",group="var1")
+    call varslice_init_nml(v1,"par/varslice.nml",group="var1")
     call varslice_update(v1, [1959.15_wp],method="exact")
     call print_var_range(v1%var, "var1", mv) 
     call varslice_update(v1, [1959.15_wp],method="interp")
@@ -38,6 +38,8 @@ if (.FALSE.) then
 end if 
     ! =======================================================
 
+
+if (.FALSE.) then
 
     ! === Testing output writing ===
 
@@ -92,12 +94,14 @@ end if
         write(*,*) 
 
         ! Write an output file
-        call make_test_file_2("test.nc",ismp%tf%var(:,:,1,1),time,init= (time .eq. time_init) )
+        call write_step("test.nc",ismp%tf%var(:,:,1,1),time,init= (time .eq. time_init) )
 
     end do
 
     write(*,*) "Done testing ismip6 forcing."
     write(*,*)
+
+end if
 
 contains
 
@@ -150,9 +154,9 @@ contains
         call nc_write_dim(filename,"yc",x=[2,4,6],units="1")
         
         ! Add time axis with current value 
-        call nc_write_dim(filename,"time", x=1950.0_wp,dx=1.0_wp,nx=11,units="years",unlimited=.TRUE.)
+        call nc_write_dim(filename,"time", x=1950.0_wp+1.0_wp/24.0_wp,dx=1.0_wp/12.0_wp,nx=11*12,units="years",unlimited=.TRUE.)
         
-        nt = 11 
+        nt = 11*12
         allocate(var(3,3,nt))
 
         do k = 1, nt 
@@ -166,7 +170,7 @@ contains
     end subroutine make_test_file
 
 
-    subroutine make_test_file_2(filename,var,time,init)
+    subroutine write_step(filename,var,time,init)
 
         implicit none 
 
@@ -211,7 +215,7 @@ contains
 
         return 
 
-    end subroutine make_test_file_2
+    end subroutine write_step
 
     
 end program test

@@ -29,7 +29,7 @@ module varslice
 
         ! Internal parameters
         integer  :: ndim 
-        real(wp) :: time_par(3) 
+        real(wp) :: time_par(4) 
 
     end type
 
@@ -48,6 +48,7 @@ module varslice
         real(wp), allocatable :: y(:)
         real(wp), allocatable :: z(:)  
         real(wp), allocatable :: time(:)
+        real(wp), allocatable :: time_sub(:)
 
         real(wp), allocatable :: var(:,:,:,:)
                 
@@ -90,7 +91,6 @@ contains
 
     end subroutine varslice_map_to_grid
 
-    
     subroutine varslice_update(vs,time,method,fill,rep)
         ! Routine to update transient climate forcing to match 
         ! current `time`. 
@@ -610,27 +610,19 @@ contains
 
         nk = size(x,1) 
 
-        ! Get lower bound 
-        k0 = 1 
+        ! Get lower bound
+        k0 = 1
         do k = 1, nk 
-            if (x(k) .gt. xmin) exit 
-            k0 = k 
-        end do 
+            if (x(k) .gt. xmin) exit
+            k0 = k
+        end do
 
-        if (xmax .eq. xmin) then 
-
-            k1 = k0 
-
-        else 
-
-            ! Get upper bound 
-            k1 = nk 
-            do k = nk, k0, -1 
-                if (x(k) .lt. xmax) exit 
-                k1 = k 
-            end do 
-
-        end if 
+        ! Get upper bound
+        k1 = k0 
+        do k = k0, nk
+            if ( x(k) .gt. xmax) exit
+            k1 = k
+        end do
 
         ! Make sure indices work for slice_method of choice
         select case(trim(slice_method))
@@ -654,19 +646,19 @@ contains
 
                     ! Redo indices to get nearest bracketing points in time_range
 
-                    ! Get lower bound 
-                    k0 = 1 
+                    ! Get lower bound
+                    k0 = 1
                     do k = 1, nk 
-                        if (x(k) .gt. x_interp) exit 
-                        k0 = k 
-                    end do 
+                        if (x(k) .gt. x_interp) exit
+                        k0 = k
+                    end do
 
-                    ! Get upper bound 
-                    k1 = nk 
-                    do k = nk, k0, -1 
-                        if (x(k) .lt. x_interp) exit 
-                        k1 = k 
-                    end do 
+                    ! Get upper bound
+                    k1 = k0 
+                    do k = k0, nk
+                        if ( x(k) .gt. x_interp) exit
+                        k1 = k
+                    end do
 
                 end if 
 
@@ -688,19 +680,19 @@ contains
 
                     ! Redo indices to get nearest bracketing points in time_range
 
-                    ! Get lower bound 
-                    k0 = 1 
+                    ! Get lower bound
+                    k0 = 1
                     do k = 1, nk 
-                        if (x(k) .gt. x_interp) exit 
-                        k0 = k 
-                    end do 
+                        if (x(k) .gt. x_interp) exit
+                        k0 = k
+                    end do
 
-                    ! Get upper bound 
-                    k1 = nk 
-                    do k = nk, k0, -1 
-                        if (x(k) .lt. x_interp) exit 
-                        k1 = k 
-                    end do 
+                    ! Get upper bound
+                    k1 = k0 
+                    do k = k0, nk
+                        if ( x(k) .gt. x_interp) exit
+                        k1 = k
+                    end do
 
                 end if 
 
@@ -903,8 +895,8 @@ contains
         vs%par%with_time = .TRUE. 
         if (present(with_time)) vs%par%with_time = with_time 
 
-        vs%par%time_par = [0.0,0.0,0.0]
-        if (present(time_par)) vs%par%time_par = time_par 
+        vs%par%time_par = [0.0,0.0,0.0,0.0]
+        if (present(time_par)) vs%par%time_par(1:size(time_par)) = time_par 
 
         ! Perform remaining init operations 
         call varslice_init_data(vs) 
@@ -922,6 +914,8 @@ contains
         ! Local variables  
         character(len=12), allocatable :: dim_names(:) 
         logical :: with_time 
+        real(wp) :: dt 
+        integer  :: k 
 
         ! Local shortcut
         with_time = vs%par%with_time 
@@ -948,10 +942,45 @@ contains
 
         if (with_time) then
 
-            ! Initialize time vector from user parameters 
-            call axis_init(vs%time,x0=vs%par%time_par(1), &
-                                   x1=vs%par%time_par(2), &
-                                   dx=vs%par%time_par(3))
+            if (vs%par%time_par(4) .le. 1.0) then
+                ! No special sub-annual axis needed, ie, time_par(4) must be greater than 1 to work
+                ! as a fractional amount of time between major units.
+
+                ! Initialize time vector from user parameters 
+                call axis_init(vs%time,x0=vs%par%time_par(1), &
+                                    x1=vs%par%time_par(2), &
+                                    dx=vs%par%time_par(3))
+            
+            else
+                ! Need to generate a sub-annual axis too
+
+                dt = 1.0 / vs%par%time_par(4)
+
+                call axis_init(vs%time, &
+                                x0=vs%par%time_par(1) + dt/2.0, &
+                                x1=vs%par%time_par(2) + 1.0 - dt/2.0, &
+                                dx=dt)
+
+                ! Store number of sub-value (1:time_par(4)), so 1:12 for monthly values, repeating for all of time.
+
+                if (allocated(vs%time_sub)) deallocate(vs%time_sub)
+                allocate(vs%time_sub(size(vs%time)))
+
+                do k = 1, size(vs%time)
+                    vs%time_sub(k) = ceiling( (vs%time(k)-floor(vs%time(k)))/dt )
+                    !write(*,*) vs%time(k), vs%time_sub(k)
+                end do
+
+                ! write(*,*) "Testing axis generation: "
+                ! write(*,*) 
+                ! do k = 1, size(vs%time)
+                !     write(*,*) vs%time(k), floor(vs%time(k)), ceiling( (vs%time(k)-floor(vs%time(k)))/dt )
+                ! end do
+                ! write(*,*) 
+                ! write(*,*) "nt = ", size(vs%time)
+                ! stop 
+
+            end if
 
             ! Check to make sure time vector matches netcdf file length 
             if (size(vs%time,1) .ne. vs%dim(vs%par%ndim)) then 
@@ -961,6 +990,8 @@ contains
                 write(*,*) "size(time):  ", size(vs%time,1)
                 write(*,*) "nt (netcdf): ", vs%dim(vs%par%ndim)
                 write(*,*) "filename:    ", trim(vs%par%filename)
+                write(*,*) 
+                write(*,*) "time = ", vs%time
                 stop 
             end if 
 
@@ -1098,6 +1129,10 @@ contains
             allocate(vs%time(1))
             vs%time = 0.0_wp 
         end if 
+        if (.not. allocated(vs%time_sub)) then 
+            allocate(vs%time_sub(1))
+            vs%time_sub = 0.0_wp 
+        end if 
 
         return  
 
@@ -1110,12 +1145,13 @@ contains
 
         type(varslice_class), intent(INOUT) :: vs 
 
-        if (allocated(vs%dim))  deallocate(vs%dim)
-        if (allocated(vs%x))        deallocate(vs%x)
-        if (allocated(vs%y))        deallocate(vs%y)
-        if (allocated(vs%z))      deallocate(vs%z)
-        if (allocated(vs%time))     deallocate(vs%time)
-        if (allocated(vs%var))      deallocate(vs%var)
+        if (allocated(vs%dim))          deallocate(vs%dim)
+        if (allocated(vs%x))            deallocate(vs%x)
+        if (allocated(vs%y))            deallocate(vs%y)
+        if (allocated(vs%z))            deallocate(vs%z)
+        if (allocated(vs%time))         deallocate(vs%time)
+        if (allocated(vs%time_sub))    deallocate(vs%time_sub)
+        if (allocated(vs%var))          deallocate(vs%var)
         
         return 
 
@@ -1131,8 +1167,7 @@ contains
         logical, optional :: verbose 
 
         ! Local variables
-        logical  :: init_pars 
-        real(wp) :: time_par(3) 
+        logical  :: init_pars
         logical  :: print_summary 
 
         init_pars = .FALSE.
@@ -1155,7 +1190,7 @@ contains
         end if 
 
         ! Make sure time parameters are consistent time_par=[x0,x1,dx]
-        if (par%time_par(3) .eq. 0) par%time_par(2) = par%time_par(1) 
+        if (par%time_par(3) .eq. 0.0) par%time_par(2) = par%time_par(1) 
 
         ! Summary 
         if (print_summary) then  
@@ -1217,7 +1252,7 @@ contains
         if (present(x1)) then 
             x1_now = x1 
         else if (present(nx)) then 
-            x1_now = (nx-1)*dx_now 
+            x1_now = x0_now + (nx-1)*dx_now 
         else 
             write(*,*) "axis_init:: Error: either x1 or nx must be present."
             stop 
@@ -1225,7 +1260,11 @@ contains
 
         if (allocated(x)) deallocate(x)
 
-        nx_now = (x1_now-x0_now)/dx_now + 1
+        nx_now = floor( (x1_now-x0_now)/dx_now ) + 1
+
+        ! Case that x0 + nx*dx != x1
+
+
         allocate(x(nx_now))
 
         do i = 1, nx_now 
