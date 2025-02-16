@@ -26,6 +26,7 @@ module varslice
         real(wp) :: unit_scale 
         real(wp) :: unit_offset
         logical  :: with_time 
+        logical  :: with_time_sub
 
         ! Internal parameters
         integer  :: ndim 
@@ -398,7 +399,7 @@ contains
                                 write(*,*) "time(k0) = ", vs%time(k0)
                                 write(*,*) "time(k1) = ", vs%time(k1) 
                                 stop
-                            end if 
+                            end if
                             
                             ! Note: slice_method='interp' and 'extrap' use the same method, since 
                             ! the indices determine interpolation weights (ie, 
@@ -694,7 +695,7 @@ contains
                         k1 = k
                     end do
 
-                end if 
+                end if
 
             case("range","range_mean","range_sd","range_min","range_max") 
                  
@@ -914,11 +915,13 @@ contains
         ! Local variables  
         character(len=12), allocatable :: dim_names(:) 
         logical :: with_time 
+        logical :: with_time_sub
         real(wp) :: dt 
         integer  :: k 
 
         ! Local shortcut
-        with_time = vs%par%with_time 
+        with_time       = vs%par%with_time 
+        with_time_sub   = vs%par%with_time_sub 
 
         ! First make sure all data objects are deallocated 
         call varslice_end(vs)
@@ -942,16 +945,7 @@ contains
 
         if (with_time) then
 
-            if (vs%par%time_par(4) .le. 1.0) then
-                ! No special sub-annual axis needed, ie, time_par(4) must be greater than 1 to work
-                ! as a fractional amount of time between major units.
-
-                ! Initialize time vector from user parameters 
-                call axis_init(vs%time,x0=vs%par%time_par(1), &
-                                    x1=vs%par%time_par(2), &
-                                    dx=vs%par%time_par(3))
-            
-            else
+            if (with_time_sub) then
                 ! Need to generate a sub-annual axis too
 
                 dt = 1.0 / vs%par%time_par(4)
@@ -979,6 +973,18 @@ contains
                 ! write(*,*) 
                 ! write(*,*) "nt = ", size(vs%time)
                 ! stop 
+
+                vs%par%with_time_sub = .TRUE. 
+
+            else
+                ! No special sub-annual axis needed.
+                ! Note: time_par(4) must be greater than 1 to work
+                ! as a fractional amount of time between major units.
+
+                ! Initialize time vector from user parameters 
+                call axis_init(vs%time,x0=vs%par%time_par(1), &
+                                    x1=vs%par%time_par(2), &
+                                    dx=vs%par%time_par(3))
 
             end if
 
@@ -1150,7 +1156,7 @@ contains
         if (allocated(vs%y))            deallocate(vs%y)
         if (allocated(vs%z))            deallocate(vs%z)
         if (allocated(vs%time))         deallocate(vs%time)
-        if (allocated(vs%time_sub))    deallocate(vs%time_sub)
+        if (allocated(vs%time_sub))     deallocate(vs%time_sub)
         if (allocated(vs%var))          deallocate(vs%var)
         
         return 
@@ -1192,16 +1198,23 @@ contains
         ! Make sure time parameters are consistent time_par=[x0,x1,dx]
         if (par%time_par(3) .eq. 0.0) par%time_par(2) = par%time_par(1) 
 
+        if (par%time_par(4) .gt. 1.0) then
+            par%with_time_sub = .TRUE.
+        else
+            par%with_time_sub = .FALSE.
+        end if
+
         ! Summary 
         if (print_summary) then  
             write(*,*) "Loading: ", trim(filename), ":: ", trim(group)
-            write(*,*) "filename    = ", trim(par%filename)
-            write(*,*) "name        = ", trim(par%name)
-            write(*,*) "units_in    = ", trim(par%units_in)
-            write(*,*) "units_out   = ", trim(par%units_out)
-            write(*,*) "unit_scale  = ", par%unit_scale
-            write(*,*) "unit_offset = ", par%unit_offset
-            write(*,*) "with_time   = ", par%with_time
+            write(*,*) "filename      = ", trim(par%filename)
+            write(*,*) "name          = ", trim(par%name)
+            write(*,*) "units_in      = ", trim(par%units_in)
+            write(*,*) "units_out     = ", trim(par%units_out)
+            write(*,*) "unit_scale    = ", par%unit_scale
+            write(*,*) "unit_offset   = ", par%unit_offset
+            write(*,*) "with_time     = ", par%with_time
+            write(*,*) "with_time_sub = ", par%with_time_sub
             if (par%with_time) then
                 write(*,*) "time_par    = ", par%time_par
             end if
