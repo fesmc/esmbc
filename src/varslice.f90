@@ -50,7 +50,8 @@ module varslice
         real(wp), allocatable :: z(:)  
         real(wp), allocatable :: time(:)
         real(wp), allocatable :: time_sub(:)
-
+        integer, allocatable  :: idx(:)
+        
         real(wp), allocatable :: var(:,:,:,:)
                 
     end type 
@@ -265,7 +266,7 @@ contains
 
                 ! Determine indices of data to load 
 
-                call get_indices(k0,k1,vs%time,vs%time_range,trim(slice_method),time(1))
+                call get_indices(k0,k1,vs%time,vs%time_range,trim(slice_method),time(1),vs%par%with_time_sub)
 
 
 
@@ -582,8 +583,65 @@ contains
 
     end subroutine varslice_update
 
+    subroutine get_indices_range(idx, x, x0, x1)
+        ! Get indices in range x0 <= x <= x1
+        ! This way all decimal values within x0 and x1 are included.
+        
+        implicit none
+        
+        integer,  intent(INOUT) :: idx(:)       ! Output indices (preallocated)
+        real(wp), intent(IN)    :: x(:)         ! Time array in years
+        real(wp), intent(IN)    :: x0           ! Start x (inclusive)
+        real(wp), intent(IN)    :: x1           ! End x (inclusive)
+        
+        ! Local variables
+        integer :: i, n, nidx
 
-    subroutine get_indices(k0,k1,x,xrange,slice_method,x_interp)
+        n = size(x)
+
+        idx = 0
+        do i = 1, n
+            if (x(i) >= x0 .and. x(i) <= x1) then
+                idx(i) = i
+            end if
+        end do
+
+        nidx = count(idx .ne. 0)
+
+        return
+
+    end subroutine get_indices_range
+
+    subroutine get_indices_range_int(idx, x, x0, x1)
+        ! Get indices in range floor(x0) <= x <= floor(x1)+1
+        ! This way all decimal values within x0 and x1 are included.
+
+        implicit none
+        
+        integer,  intent(INOUT) :: idx(:)       ! Output indices (preallocated)
+        real(wp), intent(IN)    :: x(:)         ! Time array in years
+        real(wp), intent(IN)    :: x0           ! Start x (inclusive)
+        real(wp), intent(IN)    :: x1           ! End x (inclusive)
+        
+        ! Local variables
+        integer :: i, n, nidx
+
+        n = size(x)
+
+        idx = 0
+        do i = 1, n
+            if (x(i) >= floor(x0) .and. x(i) < floor(x1) + 1) then
+                idx(i) = i
+            end if
+        end do
+
+        nidx = count(idx .ne. 0)
+
+        return
+
+    end subroutine get_indices_range_int
+
+    subroutine get_indices(k0,k1,x,xrange,slice_method,x_interp,with_sub)
         ! Get the indices k0 and k1 that 
         ! correspond to the lower and upper bound 
         ! range of xmin <= x <= xmax. 
@@ -601,6 +659,7 @@ contains
         real(wp), intent(IN)  :: xrange(2)
         character(len=*), intent(IN) :: slice_method 
         real(wp), intent(IN)  :: x_interp               ! only used for interp methods
+        logical,  intent(IN)  :: with_sub               ! Considering sub (fractional) values?
 
         ! Local variables 
         integer  :: k, nk 
@@ -1139,6 +1198,10 @@ contains
             allocate(vs%time_sub(1))
             vs%time_sub = 0.0_wp 
         end if 
+        if (.not. allocated(vs%idx)) then 
+            allocate(vs%idx(1))
+            vs%idx = 0 
+        end if 
 
         return  
 
@@ -1157,6 +1220,7 @@ contains
         if (allocated(vs%z))            deallocate(vs%z)
         if (allocated(vs%time))         deallocate(vs%time)
         if (allocated(vs%time_sub))     deallocate(vs%time_sub)
+        if (allocated(vs%idx))          deallocate(vs%idx)
         if (allocated(vs%var))          deallocate(vs%var)
         
         return 
