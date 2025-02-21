@@ -19,7 +19,7 @@ program test
 if (.TRUE.) then 
     call make_test_file("var_test.nc")
     call varslice_init_nml(v1,"par/varslice.nml",group="var1")
-    call varslice_update(v1, [1954.0125_wp],method="exact",rep=12,with_sub=.FALSE.)
+    call varslice_update(v1, [1954.0_wp,1956.0_wp],method="range_mean",with_sub=.TRUE.,rep=12)
     call print_var_range(v1%var, "var1", mv) 
     !call varslice_update(v1, [1959.15_wp],method="interp")
     !call print_var_range(v1%var, "var1", mv) 

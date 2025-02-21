@@ -85,7 +85,7 @@ contains
 
     end subroutine varslice_map_to_grid
 
-    subroutine varslice_update(vs,time,method,fill,rep,with_sub)
+    subroutine varslice_update(vs,time,method,fill,with_sub,rep)
         ! Routine to update transient climate forcing to match 
         ! current `time`. 
 
@@ -119,9 +119,9 @@ contains
         real(wp),         optional, intent(IN)    :: time(:)        ! [yr] Current time, or time range 
         character(len=*), optional, intent(IN)    :: method         ! slice_method (only if with_time==True)
         character(len=*), optional, intent(IN)    :: fill           ! none, min, max, mean (how to fill in missing values)
-        integer,          optional, intent(IN)    :: rep            ! Only if with_time==True, and slice_method==range_*
         logical,          optional, intent(IN)    :: with_sub       ! Only if with_time==True
-
+        integer,          optional, intent(IN)    :: rep            ! Only if with_time==True, and with_sub==True
+        
         ! Local variables 
         integer :: k, k0, k1, nt
         integer :: nt_tot, nt_rep, nt_major, nt_out
@@ -262,6 +262,7 @@ contains
                 ! Determine indices of data to load 
 
                 call get_indices(vs%idx,vs%time,vs%time_range,slice_method,with_time_sub)
+                
                 k0 = minval(vs%idx)
                 k1 = maxval(vs%idx)
 
@@ -420,25 +421,25 @@ contains
                             ! range_rep = 12 means apply calculation to every 12th 
                             ! value, resulting in 12 values along dimension.
 
-                            nt_out = vs%range_rep 
-                            
-                            if (nt_tot .ne. 2*nt_out) then 
-                                write(*,*) "varslice_update:: Error: something went wrong during &
-                                &interpolation. More than 2 major time slices are available to interpolate &
-                                &between. Check!"
-                                write(*,*) "nt_tot   = ", nt_tot
-                                write(*,*) "rep      = ", nt_out 
-                                write(*,*) "2*rep    = ", 2*nt_out 
-                                write(*,*) "time     = ", time 
-                                write(*,*) "indices k0, k1: ", k0, k1 
-                                write(*,*) "times : ", vs%time(k0:k1) 
-                                stop 
-                            end if 
+                            nt_out = vs%range_rep
 
                             select case(trim(slice_method))
 
                                 case("interp","extrap")
                                     
+                                    if (nt_tot .ne. 2*nt_out) then 
+                                        write(*,*) "varslice_update:: Error: something went wrong during &
+                                        &interpolation. More than 2 major time slices are available to interpolate &
+                                        &between. Check!"
+                                        write(*,*) "nt_tot   = ", nt_tot
+                                        write(*,*) "rep      = ", nt_out 
+                                        write(*,*) "2*rep    = ", 2*nt_out 
+                                        write(*,*) "time     = ", time 
+                                        write(*,*) "indices k0, k1: ", k0, k1 
+                                        write(*,*) "times : ", vs%time(k0:k1) 
+                                        stop 
+                                    end if 
+
                                     ! Calculate time weighting between two extremes
                                     allocate(time_wt(2))
                                     if (with_sub) then
@@ -598,18 +599,10 @@ contains
         real(wp) :: xmain(10000)
         real(wp) :: x0, x1
 
-        n    = size(x)
-        
+        n     = size(x)
         xmain = 0
-        
-        if (with_sub) then
-            xmain(1:n) = floor(x)
-        else
-            xmain(1:n) = x
-        end if
-
-        nidx = 0
-        ii   = 0
+        nidx  = 0
+        ii    = 0
 
         if (trim(slice_method) .eq. "interp" .or. trim(slice_method) .eq. "extrap") then
             x0 = xrange(1)
@@ -617,6 +610,21 @@ contains
         else
             x0 = xrange(1)
             x1 = xrange(2) 
+        end if
+
+        if (with_sub) then
+            if ( abs(x0-floor(x0)) .gt. TOL .or. abs(x1-floor(x1)) .gt. TOL) then
+                write(error_unit,*) "varslice_update:: Error: when time sub-axis is used, then the time range &
+                & should be specified by whole numbers."
+                write(error_unit,*) "xrange: ", xrange
+                stop
+            end if
+        end if
+
+        if (with_sub) then
+            xmain(1:n) = floor(x)
+        else
+            xmain(1:n) = x
         end if
 
         select case(trim(slice_method))
@@ -637,12 +645,12 @@ contains
                     stop
                 end if
 
-                if (x(1) <= x0 .and. x(n) >= x0) then
+                if (xmain(1) <= x0-TOL .and. xmain(n) >= x0+TOL) then
                     ! Interpolation is possible, proceed
                     
                     do i = 1, n-1
                         ii(1) = i
-                        if (x(i) > x0) then
+                        if (xmain(i) > x0-TOL) then
                             ii(2) = i+1
                             exit
                         end if
@@ -653,23 +661,28 @@ contains
 
                 ! If xmin/xmax are not found in range, 
                 ! set indices to extreme bound
-                if (minval(x) .gt. x0) then 
+                if (minval(xmain(1:n)) .gt. x0-TOL) then 
                     ii(1) = 1
                     ii(2) = 1
-                else if (maxval(x) .lt. x0) then 
+                else if (maxval(xmain(1:n)) .lt. x0+TOL) then 
                     idx(1) = n
                     idx(2) = n
                 else
                     ! TO DO - fill in loop to find bracketing indices
+                    write(error_unit,*) "get_indices:: TO DO 'extrap' case."
+                    stop
                 end if
 
             case("range","range_mean","range_sd","range_min","range_max") 
-                 
-                if (minval(x) .ge. x0 .and. maxval(x) .le. x1) then
+                
+                write(*,*) "range: ", xmain(1), xmain(n), x0-TOL, x1+TOL
+
+                if ( x0-TOL .ge. xmain(1) .and. x1+TOL .le. xmain(n)) then
                     ! All values within the range are available, proceed
                     
                     do i = 1, n
-                        if (xmain(i) >= x0 .and. xmain(i) <= x1) ii(i) = i
+                        write(*,*) i, x0-TOL, xmain(i), x1+TOL
+                        if (xmain(i) >= x0-TOL .and. xmain(i) <= x1+TOL) ii(i) = i
                     end do
                     
                 end if 
