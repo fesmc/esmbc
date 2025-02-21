@@ -257,11 +257,6 @@ contains
                     trim(slice_method) .eq. "extrap") then 
                     ! Update time range for interp/extrap methods 
 
-                    ! Time range should cover all available data since 
-                    ! bracketing indices to the desired time will be found
-                    vs%time_range(1) = minval(vs%time) 
-                    vs%time_range(2) = maxval(vs%time) 
-
                     ! Additional consistency check 
                     if (size(time,1) .ne. 1) then 
                         write(*,*) "varslice_update:: Error: to use slice_method=['interp','extrap'], &
@@ -270,11 +265,11 @@ contains
                         stop 
                     end if 
 
-                end if 
+                end if
 
                 ! Determine indices of data to load 
 
-                call get_indices(vs%idx,vs%time,vs%time_range,trim(slice_method),time(1),with_time_sub)
+                call get_indices(vs%idx,vs%time,vs%time_range,slice_method,with_time_sub)
                 k0 = minval(vs%idx)
                 k1 = maxval(vs%idx)
 
@@ -593,23 +588,23 @@ contains
 
     end subroutine varslice_update
 
-    subroutine get_indices_range(idx, x, x0, x1, method, with_sub)
+    subroutine get_indices(idx, x, xrange, slice_method, with_sub)
         ! Get indices in range x0 <= x <= x1
         ! This way all decimal values within x0 and x1 are included.
         
         implicit none
         
         integer,  allocatable, intent(INOUT) :: idx(:)  ! Output indices
-        real(wp), intent(IN)    :: x(:)         ! Time array in years
-        real(wp), intent(IN)    :: x0           ! Start x (inclusive)
-        real(wp), intent(IN)    :: x1           ! End x (inclusive)
-        character(len=*), intent(IN) :: method       ! method = "exact", "interp", "extrap"
-        logical,   intent(IN)   :: with_sub     ! Use fractional time unit too
+        real(wp), intent(IN)    :: x(:)                 ! Time array in years
+        real(wp), intent(IN)    :: xrange(:)            ! [Start, End] x (inclusive) or [x_interp]
+        character(len=*), intent(IN) :: slice_method    ! method = "exact", "interp", "extrap"
+        logical,   intent(IN)   :: with_sub             ! Use fractional time unit too
 
         ! Local variables
         integer :: i, n, nidx
         integer :: ii(10000)
         real(wp) :: xmain(10000)
+        real(wp) :: x0, x1
 
         n    = size(x)
         
@@ -624,7 +619,15 @@ contains
         nidx = 0
         ii   = 0
 
-        select case(trim(method))
+        if (trim(slice_method) .eq. "interp" .or. trim(slice_method) .eq. "extrap") then
+            x0 = xrange(1)
+            x1 = xrange(1)
+        else
+            x0 = xrange(1)
+            x1 = xrange(2) 
+        end if
+
+        select case(trim(slice_method))
 
             case("exact")
 
@@ -635,7 +638,7 @@ contains
             case("interp")
 
                 if (x0 .ne. x1) then
-                    write(error_unit,*) "get_indices_range:: Error: for method='interp', &
+                    write(error_unit,*) "get_indices:: Error: for method='interp', &
                     &only one interpolation value should be provided."
                     write(error_unit,*) "x0: ", x0
                     write(error_unit,*) "x1: ", x1
@@ -668,6 +671,17 @@ contains
                     ! TO DO - fill in loop to find bracketing indices
                 end if
 
+            case("range","range_mean","range_sd","range_min","range_max") 
+                 
+                if (minval(x) .ge. x0 .and. maxval(x) .le. x1) then
+                    ! All values within the range are available, proceed
+                    
+                    do i = 1, n
+                        if (xmain(i) >= x0 .and. xmain(i) <= x1) ii(i) = i
+                    end do
+                    
+                end if 
+
         end select
 
         nidx = count(ii .gt. 0)
@@ -682,7 +696,7 @@ contains
             idx(1) = -1
         end if
 
-        write(*,*) "get_indices_range: ", x0, x1, method, with_sub
+        write(*,*) "get_indices: ", x0, x1, slice_method, with_sub
         !write(*,*) "x: ", xmain(1:n)
         write(*,*) "nidx: ", nidx
         write(*,*) "idx: ", ii(1:nidx)
@@ -690,59 +704,6 @@ contains
         write(*,*) "x:   ", x(idx)
         
         return
-
-    end subroutine get_indices_range
-
-    subroutine get_indices(idx,x,xrange,slice_method,x_interp,with_sub)
-        ! Get the indices k0 and k1 that 
-        ! correspond to the lower and upper bound 
-        ! range of xmin <= x <= xmax. 
-
-        ! Resulting indices should either match 
-        ! the range exactly, or bracket the range of interest 
-
-        ! Note: routine assumes xmin <= xmax! 
-
-        implicit none 
-
-        integer,  allocatable, intent(INOUT) :: idx(:)
-        real(wp), intent(IN)  :: x(:) 
-        real(wp), intent(IN)  :: xrange(2)
-        character(len=*), intent(IN) :: slice_method 
-        real(wp), intent(IN)  :: x_interp               ! only used for interp methods
-        logical,  intent(IN)  :: with_sub               ! Considering sub (fractional) values?
-
-        ! Local variables 
-        integer  :: k, k0, k1, nk 
-        real(wp) :: xmin, xmax 
-
-        nk = size(x,1) 
-
-        if (trim(slice_method) .eq. "interp" .or. trim(slice_method) .eq. "extrap") then
-            xmin = x_interp
-            xmax = x_interp
-        else
-            xmin = xrange(1)
-            xmax = xrange(2) 
-        end if
-
-        call get_indices_range(idx, x, xmin, xmax, slice_method, with_sub)
-
-        select case(trim(slice_method))
-
-            case("range","range_mean","range_sd","range_min","range_max") 
-                 
-                ! If xmin/xmax are not found in range, set indices to -1
-                if (minval(x) .gt. xmax .or. maxval(x) .lt. xmin) then 
-                    if (allocated(idx)) deallocate(idx)
-                    allocate(idx(1))
-                    idx(1) = -1
-                end if 
-
-            ! No default case
-        end select 
-
-        return 
 
     end subroutine get_indices
 
