@@ -34,7 +34,7 @@ endif
 ###############################################
 
 $(objdir)/ismip6.o: $(srcdir)/ismip6.f90 $(objdir)/nml.o \
-							$(objdir)/ncio.o $(objdir)/varslice.o
+							$(objdir)/precision.o $(objdir)/ncio.o $(objdir)/varslice.o
 	$(FC) $(DFLAGS) $(FFLAGS) -c -o $@ $<
 
 $(objdir)/ncio.o: $(srcdir)/ncio.f90
@@ -43,7 +43,11 @@ $(objdir)/ncio.o: $(srcdir)/ncio.f90
 $(objdir)/nml.o: $(srcdir)/nml.f90
 	$(FC) $(DFLAGS) $(FFLAGS) -c -o $@ $<
 
-$(objdir)/varslice.o: $(srcdir)/varslice.f90 $(objdir)/nml.o $(objdir)/ncio.o $(objdir)/mapping_scrip.o
+$(objdir)/precision.o: $(srcdir)/precision.f90
+	$(FC) $(DFLAGS) $(FFLAGS) $(INC_NC) -c -o $@ $<
+
+$(objdir)/varslice.o: $(srcdir)/varslice.f90 $(objdir)/nml.o $(objdir)/ncio.o $(objdir)/mapping_scrip.o \
+								$(objdir)/precision.o
 	$(FC) $(DFLAGS) $(FFLAGS) -c -o $@ $<
 
 # coordinates-light
@@ -70,6 +74,7 @@ $(objdir)/mapping_scrip.o: $(srcdir)/coordinates-light/mapping_scrip.f90 $(objdi
 esmbc_libs = 	$(objdir)/ismip6.o \
 				$(objdir)/nml.o \
 				$(objdir)/ncio.o \
+				$(objdir)/precision.o \
 				$(objdir)/varslice.o \
 				$(objdir)/grid_to_cdo.o \
 				$(objdir)/gaussian_filter.o \

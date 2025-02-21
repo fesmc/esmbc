@@ -1,21 +1,12 @@
 program test
 
+    use precision
     use ncio 
 
     use ismip6
     use varslice 
 
     implicit none 
-
-    ! Internal constants
-    integer,  parameter :: dp  = kind(1.d0)
-    integer,  parameter :: sp  = kind(1.0)
-
-    ! Choose the working precision of the library (sp,dp)
-    integer,  parameter :: wp = sp 
-
-    ! Define default missing value 
-    real(wp), parameter :: mv = -9999.0_wp 
 
     type(ismip6_experiment_class) :: iexp 
     type(ismip6_forcing_class) :: ismp 
@@ -28,7 +19,7 @@ program test
 if (.TRUE.) then 
     call make_test_file("var_test.nc")
     call varslice_init_nml(v1,"par/varslice.nml",group="var1")
-    call varslice_update(v1, [1954.0_wp],method="exact",rep=12,with_sub=.TRUE.)
+    call varslice_update(v1, [1954.0125_wp],method="exact",rep=12,with_sub=.FALSE.)
     call print_var_range(v1%var, "var1", mv) 
     !call varslice_update(v1, [1959.15_wp],method="interp")
     !call print_var_range(v1%var, "var1", mv) 

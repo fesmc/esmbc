@@ -1,21 +1,13 @@
 module varslice
 
     use, intrinsic :: iso_fortran_env, only : input_unit, output_unit, error_unit
+    
+    use precision
     use ncio 
     use nml 
     use mapping_scrip
 
     implicit none 
-
-    ! Internal constants
-    integer,  parameter :: dp  = kind(1.d0)
-    integer,  parameter :: sp  = kind(1.0)
-
-    ! Choose the working precision of the library (sp,dp)
-    integer,  parameter :: wp = sp 
-
-    ! Define default missing value 
-    real(wp), parameter :: mv = -9999.0_wp 
 
     type varslice_param_class
 
@@ -632,7 +624,7 @@ contains
             case("exact")
 
                 do i = 1, n
-                    if (xmain(i) >= x0 .and. xmain(i) <= x1) ii(i) = i
+                    if (xmain(i) >= x0-TOL .and. xmain(i) <= x1+TOL) ii(i) = i
                 end do
                 
             case("interp")
@@ -1273,7 +1265,7 @@ contains
 
         if (allocated(x)) deallocate(x)
 
-        nx_now = floor( (x1_now-x0_now)/dx_now ) + 1
+        nx_now = ceiling( (x1_now-x0_now)/dx_now ) + 1
 
         ! Case that x0 + nx*dx != x1
 
