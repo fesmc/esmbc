@@ -93,7 +93,7 @@ contains
 
     end subroutine varslice_map_to_grid
 
-    subroutine varslice_update(vs,time,method,fill,rep)
+    subroutine varslice_update(vs,time,method,fill,rep,with_sub)
         ! Routine to update transient climate forcing to match 
         ! current `time`. 
 
@@ -128,14 +128,17 @@ contains
         character(len=*), optional, intent(IN)    :: method         ! slice_method (only if with_time==True)
         character(len=*), optional, intent(IN)    :: fill           ! none, min, max, mean (how to fill in missing values)
         integer,          optional, intent(IN)    :: rep            ! Only if with_time==True, and slice_method==range_*
-        
+        logical,          optional, intent(IN)    :: with_sub       ! Only if with_time==True
+
         ! Local variables 
-        integer :: k, k0, k1, nt, nt_now, nt_out
+        integer :: k, k0, k1, nt
+        integer :: nt_tot, nt_rep, nt_major, nt_out
         integer :: n1, n2, i, j, l    
         type(varslice_param_class) :: par 
-        logical  :: with_time 
+        logical  :: with_time
+        logical  :: with_time_sub
         real(wp) :: time_range(2) 
-        real(wp) :: time_wt(2)
+        real(wp), allocatable :: time_wt(:)
         character(len=56) :: slice_method
         character(len=56) :: fill_method
         character(len=56) :: vec_method 
@@ -146,6 +149,12 @@ contains
         ! Define shortcuts
         par = vs%par 
         with_time = par%with_time 
+
+        if (present(with_sub)) then
+            with_time_sub = with_sub
+        else
+            with_time_sub = par%with_time_sub
+        end if
 
         if (with_time) then 
 
@@ -180,7 +189,6 @@ contains
         
         range_rep = 1
         if (present(rep)) range_rep = rep 
-
 
         if (present(time)) then
 
@@ -266,16 +274,38 @@ contains
 
                 ! Determine indices of data to load 
 
-                call get_indices(k0,k1,vs%time,vs%time_range,trim(slice_method),time(1),vs%par%with_time_sub)
+                call get_indices(vs%idx,vs%time,vs%time_range,trim(slice_method),time(1),with_time_sub)
+                k0 = minval(vs%idx)
+                k1 = maxval(vs%idx)
 
-
+                write(*,*) "idx: ", k0, k1
+                if (k0 .gt. 0) write(*,*) vs%time(k0)
+                if (k1 .gt. 0) write(*,*) vs%time(k1)
 
                 if (k0 .gt. 0 .and. k1 .gt. 0) then 
                     ! Dimension range is available for loading, proceed 
 
                     ! Get size of time dimension needed for loading
-                    nt_now = k1-k0+1
+                    nt_tot = k1-k0+1
 
+                    ! Get size of time dimensions for major axis and sub axis
+                    nt_rep   = vs%range_rep
+                    nt_major = nt_tot / nt_rep
+
+                    if (nt_major .ne. int(real(nt_tot)/real(nt_rep))) then
+                        write(error_unit,*) "varslice_update:: Error: number of major time axis points &
+                        &does not match number of total points divided by number of sub-time points."
+                        write(error_unit,*) "nt_rep   = ", nt_rep
+                        write(error_unit,*) "nt_tot   = ", nt_tot
+                        write(error_unit,*) "nt_major = ", nt_major
+                        write(error_unit,*) "int(real(nt_tot)/real(nt_rep)) = ", int(real(nt_tot)/real(nt_rep))
+                        stop
+                    end if
+
+                    write(*,*) "nt_tot:   ", nt_tot
+                    write(*,*) "nt_rep:   ", nt_rep
+                    write(*,*) "nt_major: ", nt_major
+                    
                     ! write(*,*) "time: ", vs%time_range, k0, k1 
                     ! write(*,*) "      ", vs%time(k0), vs%time(k1)
 
@@ -286,39 +316,38 @@ contains
                         case(1)
 
                             ! Allocate local var to the right size 
-                            allocate(var(nt_now,1,1,1))
+                            allocate(var(nt_tot,1,1,1))
 
                             ! 0D (point) variable plus time dimension 
                             call nc_read(par%filename,par%name,var,missing_value=mv, &
-                                    start=[k0],count=[nt_now])
-
+                                    start=[k0],count=[nt_tot])
 
                         case(2)
 
                             ! Allocate local var to the right size 
-                            allocate(var(vs%dim(1),nt_now,1,1))
+                            allocate(var(vs%dim(1),nt_tot,1,1))
 
                             ! 1D variable plus time dimension 
                             call nc_read(par%filename,par%name,var,missing_value=mv, &
-                                    start=[1,k0],count=[vs%dim(1),nt_now])
+                                    start=[1,k0],count=[vs%dim(1),nt_tot])
 
                         case(3)
         
                             ! Allocate local var to the right size 
-                            allocate(var(vs%dim(1),vs%dim(2),nt_now,1))
+                            allocate(var(vs%dim(1),vs%dim(2),nt_tot,1))
 
                             ! 2D variable plus time dimension 
                             call nc_read(par%filename,par%name,var,missing_value=mv, &
-                                    start=[1,1,k0],count=[vs%dim(1),vs%dim(2),nt_now])
+                                    start=[1,1,k0],count=[vs%dim(1),vs%dim(2),nt_tot])
 
                         case(4)
 
                             ! Allocate local var to the right size 
-                            allocate(var(vs%dim(1),vs%dim(2),vs%dim(3),nt_now))
+                            allocate(var(vs%dim(1),vs%dim(2),vs%dim(3),nt_tot))
 
                             ! 3D variable plus time dimension 
                             call nc_read(par%filename,par%name,var,missing_value=mv, &
-                                    start=[1,1,1,k0],count=[vs%dim(1),vs%dim(2),vs%dim(3),nt_now]) 
+                                    start=[1,1,1,k0],count=[vs%dim(1),vs%dim(2),vs%dim(3),nt_tot]) 
 
                         case DEFAULT 
 
@@ -327,7 +356,6 @@ contains
                             stop 
 
                     end select
-
 
                     ! At this point, the local var variable has been defined 
                     ! with data from the file for the appropriate time indices 
@@ -345,8 +373,7 @@ contains
                         ! Same time is given for upper and lower bound
 
                         slice_method = "exact"     
-                    end if 
-
+                    end if
 
                     ! Now, allocate the vs%var variable to the right size 
 
@@ -373,94 +400,31 @@ contains
                             ! Store data in vs%var 
                             vs%var = var 
 
-                        case("interp","extrap")
-                            ! var should have two time dimensions to interpolate
+                        case("interp","extrap","range_mean","range_sd","range_min","range_max","range_sum")
+                            ! var should have two major time dimensions to interpolate
                             ! between. Allocate vs%var to appropriate size and 
                             ! perform interpolation 
 
-                            if (nt_now .ne. 2) then 
-                                write(*,*) "varslice_update:: Error: something went wrong during &
-                                &interpolation. More than 2 time slices are available to interpolate &
-                                &between. Check!"
-                                write(*,*) "nt_now = ", nt_now 
-                                write(*,*) "time   = ", time 
-                                write(*,*) "indices k0, k1: ", k0, k1 
-                                write(*,*) "times : ", vs%time(k0:k1) 
-                                stop 
-                            end if 
-
-                            ! Calculate time weighting between two extremes
-                            time_wt(2) = (time(1)-vs%time(k0)) / (vs%time(k1) - vs%time(k0))
-                            time_wt(1) = 1.0_wp - time_wt(2) 
-
-                            if (minval(time_wt) .lt. 0.0_wp .or. maxval(time_wt) .gt. 1.0_wp) then 
-                                write(*,*) "varslice_update:: Error: interpolation weights are incorrect."
-                                write(*,*) "time_wt  = ", time_wt 
-                                write(*,*) "time     = ", time 
-                                write(*,*) "time(k0) = ", vs%time(k0)
-                                write(*,*) "time(k1) = ", vs%time(k1) 
-                                stop
-                            end if
-                            
                             ! Note: slice_method='interp' and 'extrap' use the same method, since 
                             ! the indices determine interpolation weights (ie, 
                             ! for slice_method='interp', if the time of interest lies
                             ! outside of the bounds of the data, then k0=k1=-1 and 
                             ! output data are set to missing values) 
 
-                            vec_method = "mean"     ! interp methods use the (weighted) mean
-                            nt_out     = 1          ! We expect one time out 
+                            select case(trim(slice_method))
 
-                            deallocate(vs%var)
-
-                            select case(par%ndim)
-
-                                case(1)
-                                    allocate(vs%var(nt_out,1,1,1))
-
-                                    ! Calculate the vector value desired (wtd mean)
-                                    call calc_vec_value(vs%var(1,1,1,1),var([1,2],1,1,1),vec_method,mv,wt=time_wt)
-
-                                case(2)
-                                    allocate(vs%var(size(var,1),nt_out,1,1))
-
-                                    do i = 1, size(vs%var,1)
-                                        ! Calculate the vector value desired (mean,sd,...)
-                                        call calc_vec_value(vs%var(i,1,1,1),var(i,[1,2],1,1),vec_method,mv,wt=time_wt)
-                                    end do 
+                                case("interp","extrap")
                                     
-                                case(3)
-                                    allocate(vs%var(size(var,1),size(var,2),nt_out,1))
-                                    
-                                    do j = 1, size(vs%var,2)
-                                    do i = 1, size(vs%var,1)
-                                        ! Calculate the vector value desired (mean,sd,...)
-                                        call calc_vec_value(vs%var(i,j,1,1),var(i,j,[1,2],1),vec_method,mv,wt=time_wt)
-                                    end do
-                                    end do 
-                                    
-                                case(4)
-                                    allocate(vs%var(size(var,1),size(var,2),size(var,3),nt_out))
+                                    vec_method = "mean"     ! interp methods use the (weighted) mean
 
-                                    do l = 1, size(vs%var,3)
-                                    do j = 1, size(vs%var,2)
-                                    do i = 1, size(vs%var,1)
-                                        ! Calculate the vector value desired (mean,sd,...)
-                                        call calc_vec_value(vs%var(i,j,l,1),var(i,j,l,[1,2]),vec_method,mv,wt=time_wt)
-                                    end do
-                                    end do
-                                    end do 
-                                    
+                                case("range_mean","range_sd","range_min","range_max","range_sum")
+
+                                    ! Define 'vec_method'
+                                    n1 = index(slice_method,"_")
+                                    n2 = len_trim(slice_method)
+                                    vec_method = slice_method(n1+1:n2)
+
                             end select
-
-                        case("range_mean","range_sd","range_min","range_max","range_sum")
-                            ! Allocate vs%var to match desired output size, 
-                            ! and calculate output values 
-
-                            ! Define 'vec_method'
-                            n1 = index(slice_method,"_")
-                            n2 = len_trim(slice_method)
-                            vec_method = slice_method(n1+1:n2)
 
                             ! Size of dimension out is the size of the 
                             ! repitition desired. Ie, range_rep = 1 means 
@@ -471,13 +435,59 @@ contains
 
                             nt_out = vs%range_rep 
                             
+                            if (nt_tot .ne. 2*nt_out) then 
+                                write(*,*) "varslice_update:: Error: something went wrong during &
+                                &interpolation. More than 2 major time slices are available to interpolate &
+                                &between. Check!"
+                                write(*,*) "nt_tot   = ", nt_tot
+                                write(*,*) "rep      = ", nt_out 
+                                write(*,*) "2*rep    = ", 2*nt_out 
+                                write(*,*) "time     = ", time 
+                                write(*,*) "indices k0, k1: ", k0, k1 
+                                write(*,*) "times : ", vs%time(k0:k1) 
+                                stop 
+                            end if 
+
+                            select case(trim(slice_method))
+
+                                case("interp","extrap")
+                                    
+                                    ! Calculate time weighting between two extremes
+                                    allocate(time_wt(2))
+                                    if (with_sub) then
+                                        time_wt(2) = real(floor(time(1))-floor(vs%time(k0))) / real(floor(vs%time(k1)) - floor(vs%time(k0)))
+                                        time_wt(1) = 1.0_wp - time_wt(2) 
+                                    else
+                                        time_wt(2) = (time(1)-vs%time(k0)) / (vs%time(k1) - vs%time(k0))
+                                        time_wt(1) = 1.0_wp - time_wt(2) 
+                                    end if
+
+                                case("range_mean","range_sd","range_min","range_max","range_sum")
+
+                                    ! Equal weights to all values
+                                    allocate(time_wt(nt_tot))
+                                    time_wt = 1.0
+
+                            end select
+
+                            if (minval(time_wt) .lt. 0.0_wp .or. maxval(time_wt) .gt. 1.0_wp) then 
+                                write(*,*) "varslice_update:: Error: interpolation weights are incorrect."
+                                write(*,*) "time_wt  = ", time_wt 
+                                write(*,*) "time     = ", time 
+                                write(*,*) "time(k0) = ", vs%time(k0)
+                                write(*,*) "time(k1) = ", vs%time(k1) 
+                                stop
+                            end if
+                            
+
+
                             ! Make sure that var has at least as many values as we expect 
-                            if (nt_out .gt. nt_now) then 
+                            if (nt_out .gt. nt_tot) then 
                                 write(*,*) "varslice_update:: Error: the specified time range &
                                     & does not provide enough data points to be consistent with &
                                     & the specified value of range_rep."
                                 write(*,*) "time_range      = ", vs%time_range 
-                                write(*,*) "nt (time_range) = ", nt_now 
+                                write(*,*) "nt (time_range) = ", nt_tot 
                                 write(*,*) "range_rep       = ", vs%range_rep 
                                 write(*,*) "range_rep must be <= nt."
                                 stop 
@@ -494,10 +504,10 @@ contains
                                     do k = 1, nt_out 
 
                                         ! Get indices for current repitition
-                                        call get_rep_indices(kk,i0=k,i1=nt_now,nrep=vs%range_rep)
+                                        call get_rep_indices(kk,i0=k,i1=nt_tot,nrep=vs%range_rep)
 
                                         ! Calculate the vector value desired (mean,sd,...)
-                                        call calc_vec_value(vs%var(k,1,1,1),var(kk,1,1,1),vec_method,mv)
+                                        call calc_vec_value(vs%var(k,1,1,1),var(kk,1,1,1),vec_method,mv,wt=time_wt)
 
                                     end do 
 
@@ -508,11 +518,11 @@ contains
                                     do k = 1, nt_out 
 
                                         ! Get indices for current repitition
-                                        call get_rep_indices(kk,i0=k,i1=nt_now,nrep=vs%range_rep)
+                                        call get_rep_indices(kk,i0=k,i1=nt_tot,nrep=vs%range_rep)
 
                                         do i = 1, size(vs%var,1)
                                             ! Calculate the vector value desired (mean,sd,...)
-                                            call calc_vec_value(vs%var(i,k,1,1),var(i,kk,1,1),vec_method,mv)
+                                            call calc_vec_value(vs%var(i,k,1,1),var(i,kk,1,1),vec_method,mv,wt=time_wt)
                                         end do 
 
                                     end do 
@@ -524,12 +534,12 @@ contains
                                     do k = 1, nt_out 
 
                                         ! Get indices for current repitition
-                                        call get_rep_indices(kk,i0=k,i1=nt_now,nrep=vs%range_rep)
+                                        call get_rep_indices(kk,i0=k,i1=nt_tot,nrep=vs%range_rep)
 
                                         do j = 1, size(vs%var,2)
                                         do i = 1, size(vs%var,1)
                                             ! Calculate the vector value desired (mean,sd,...)
-                                            call calc_vec_value(vs%var(i,j,k,1),var(i,j,kk,1),vec_method,mv)
+                                            call calc_vec_value(vs%var(i,j,k,1),var(i,j,kk,1),vec_method,mv,wt=time_wt)
                                         end do
                                         end do 
                                         
@@ -542,13 +552,13 @@ contains
                                     do k = 1, nt_out 
 
                                         ! Get indices for current repitition
-                                        call get_rep_indices(kk,i0=k,i1=nt_now,nrep=vs%range_rep)
+                                        call get_rep_indices(kk,i0=k,i1=nt_tot,nrep=vs%range_rep)
 
                                         do l = 1, size(vs%var,3)
                                         do j = 1, size(vs%var,2)
                                         do i = 1, size(vs%var,1)
                                             ! Calculate the vector value desired (mean,sd,...)
-                                            call calc_vec_value(vs%var(i,j,l,k),var(i,j,l,kk),vec_method,mv)
+                                            call calc_vec_value(vs%var(i,j,l,k),var(i,j,l,kk),vec_method,mv,wt=time_wt)
                                         end do
                                         end do
                                         end do 
@@ -583,65 +593,107 @@ contains
 
     end subroutine varslice_update
 
-    subroutine get_indices_range(idx, x, x0, x1)
+    subroutine get_indices_range(idx, x, x0, x1, method, with_sub)
         ! Get indices in range x0 <= x <= x1
         ! This way all decimal values within x0 and x1 are included.
         
         implicit none
         
-        integer,  intent(INOUT) :: idx(:)       ! Output indices (preallocated)
+        integer,  allocatable, intent(INOUT) :: idx(:)  ! Output indices
         real(wp), intent(IN)    :: x(:)         ! Time array in years
         real(wp), intent(IN)    :: x0           ! Start x (inclusive)
         real(wp), intent(IN)    :: x1           ! End x (inclusive)
-        
+        character(len=*), intent(IN) :: method       ! method = "exact", "interp", "extrap"
+        logical,   intent(IN)   :: with_sub     ! Use fractional time unit too
+
         ! Local variables
         integer :: i, n, nidx
+        integer :: ii(10000)
+        real(wp) :: xmain(10000)
 
-        n = size(x)
+        n    = size(x)
+        
+        xmain = 0
+        
+        if (with_sub) then
+            xmain(1:n) = floor(x)
+        else
+            xmain(1:n) = x
+        end if
 
-        idx = 0
-        do i = 1, n
-            if (x(i) >= x0 .and. x(i) <= x1) then
-                idx(i) = i
-            end if
-        end do
+        nidx = 0
+        ii   = 0
 
-        nidx = count(idx .ne. 0)
+        select case(trim(method))
 
+            case("exact")
+
+                do i = 1, n
+                    if (xmain(i) >= x0 .and. xmain(i) <= x1) ii(i) = i
+                end do
+                
+            case("interp")
+
+                if (x0 .ne. x1) then
+                    write(error_unit,*) "get_indices_range:: Error: for method='interp', &
+                    &only one interpolation value should be provided."
+                    write(error_unit,*) "x0: ", x0
+                    write(error_unit,*) "x1: ", x1
+                    stop
+                end if
+
+                if (x(1) <= x0 .and. x(n) >= x0) then
+                    ! Interpolation is possible, proceed
+                    
+                    do i = 1, n-1
+                        ii(1) = i
+                        if (x(i) > x0) then
+                            ii(2) = i+1
+                            exit
+                        end if
+                    end do
+                end if
+
+            case("extrap")
+
+                ! If xmin/xmax are not found in range, 
+                ! set indices to extreme bound
+                if (minval(x) .gt. x0) then 
+                    ii(1) = 1
+                    ii(2) = 1
+                else if (maxval(x) .lt. x0) then 
+                    idx(1) = n
+                    idx(2) = n
+                else
+                    ! TO DO - fill in loop to find bracketing indices
+                end if
+
+        end select
+
+        nidx = count(ii .gt. 0)
+
+        if (nidx .gt. 0) then
+            if (allocated(idx)) deallocate(idx)
+            allocate(idx(nidx)) 
+            idx = pack(ii, ii.gt.0)
+        else
+            if (allocated(idx)) deallocate(idx)
+            allocate(idx(1))
+            idx(1) = -1
+        end if
+
+        write(*,*) "get_indices_range: ", x0, x1, method, with_sub
+        !write(*,*) "x: ", xmain(1:n)
+        write(*,*) "nidx: ", nidx
+        write(*,*) "idx: ", ii(1:nidx)
+        write(*,*) "idx: ", idx
+        write(*,*) "x:   ", x(idx)
+        
         return
 
     end subroutine get_indices_range
 
-    subroutine get_indices_range_int(idx, x, x0, x1)
-        ! Get indices in range floor(x0) <= x <= floor(x1)+1
-        ! This way all decimal values within x0 and x1 are included.
-
-        implicit none
-        
-        integer,  intent(INOUT) :: idx(:)       ! Output indices (preallocated)
-        real(wp), intent(IN)    :: x(:)         ! Time array in years
-        real(wp), intent(IN)    :: x0           ! Start x (inclusive)
-        real(wp), intent(IN)    :: x1           ! End x (inclusive)
-        
-        ! Local variables
-        integer :: i, n, nidx
-
-        n = size(x)
-
-        idx = 0
-        do i = 1, n
-            if (x(i) >= floor(x0) .and. x(i) < floor(x1) + 1) then
-                idx(i) = i
-            end if
-        end do
-
-        nidx = count(idx .ne. 0)
-
-        return
-
-    end subroutine get_indices_range_int
-
-    subroutine get_indices(k0,k1,x,xrange,slice_method,x_interp,with_sub)
+    subroutine get_indices(idx,x,xrange,slice_method,x_interp,with_sub)
         ! Get the indices k0 and k1 that 
         ! correspond to the lower and upper bound 
         ! range of xmin <= x <= xmax. 
@@ -653,8 +705,7 @@ contains
 
         implicit none 
 
-        integer,  intent(OUT) :: k0 
-        integer,  intent(OUT) :: k1 
+        integer,  allocatable, intent(INOUT) :: idx(:)
         real(wp), intent(IN)  :: x(:) 
         real(wp), intent(IN)  :: xrange(2)
         character(len=*), intent(IN) :: slice_method 
@@ -662,106 +713,30 @@ contains
         logical,  intent(IN)  :: with_sub               ! Considering sub (fractional) values?
 
         ! Local variables 
-        integer  :: k, nk 
+        integer  :: k, k0, k1, nk 
         real(wp) :: xmin, xmax 
-
-        xmin = xrange(1)
-        xmax = xrange(2) 
 
         nk = size(x,1) 
 
-        ! Get lower bound
-        k0 = 1
-        do k = 1, nk 
-            if (x(k) .gt. xmin) exit
-            k0 = k
-        end do
+        if (trim(slice_method) .eq. "interp" .or. trim(slice_method) .eq. "extrap") then
+            xmin = x_interp
+            xmax = x_interp
+        else
+            xmin = xrange(1)
+            xmax = xrange(2) 
+        end if
 
-        ! Get upper bound
-        k1 = k0 
-        do k = k0, nk
-            if ( x(k) .gt. xmax) exit
-            k1 = k
-        end do
+        call get_indices_range(idx, x, xmin, xmax, slice_method, with_sub)
 
-        ! Make sure indices work for slice_method of choice
         select case(trim(slice_method))
-
-            case("exact") 
-
-                ! If index wasn't found, set idices to -1
-                if (x(k0) .ne. xmin) then 
-                    k0 = -1 
-                    k1 = -1 
-                end if 
-     
-            case("interp") 
-
-                ! If xmin/xmax are not found in range, set indices to -1
-                if (x_interp .gt. xmax .or. x_interp .lt. xmin) then 
-                    k0 = -1
-                    k1 = -1 
-
-                else 
-
-                    ! Redo indices to get nearest bracketing points in time_range
-
-                    ! Get lower bound
-                    k0 = 1
-                    do k = 1, nk 
-                        if (x(k) .gt. x_interp) exit
-                        k0 = k
-                    end do
-
-                    ! Get upper bound
-                    k1 = k0 
-                    do k = k0, nk
-                        if ( x(k) .gt. x_interp) exit
-                        k1 = k
-                    end do
-
-                end if 
-
-            case("extrap") 
-
-                ! If xmin/xmax are not found in range, 
-                ! set indices to extreme bound
-                if (minval(x) .gt. x_interp) then 
-
-                    k0 = 1
-                    k1 = 1 
-                
-                else if (maxval(x) .lt. x_interp) then 
-
-                    k0 = nk
-                    k1 = nk
-
-                else 
-
-                    ! Redo indices to get nearest bracketing points in time_range
-
-                    ! Get lower bound
-                    k0 = 1
-                    do k = 1, nk 
-                        if (x(k) .gt. x_interp) exit
-                        k0 = k
-                    end do
-
-                    ! Get upper bound
-                    k1 = k0 
-                    do k = k0, nk
-                        if ( x(k) .gt. x_interp) exit
-                        k1 = k
-                    end do
-
-                end if
 
             case("range","range_mean","range_sd","range_min","range_max") 
                  
                 ! If xmin/xmax are not found in range, set indices to -1
                 if (minval(x) .gt. xmax .or. maxval(x) .lt. xmin) then 
-                    k0 = -1
-                    k1 = -1 
+                    if (allocated(idx)) deallocate(idx)
+                    allocate(idx(1))
+                    idx(1) = -1
                 end if 
 
             ! No default case
@@ -774,7 +749,7 @@ contains
     subroutine get_rep_indices(ii,i0,i1,nrep)
         ! Given starting value i0 and final value i1, 
         ! and number of values to skip nrep, generate 
-        ! an vector of indices ii. 
+        ! a vector of indices ii. 
         ! eg, i0 = 1, i1 = 36, nrep = 12
         ! => ii = [1,13,25]
         ! eg, i0 = 2, i1 = 36, nrep = 12

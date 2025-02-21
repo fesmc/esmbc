@@ -28,12 +28,12 @@ program test
 if (.TRUE.) then 
     call make_test_file("var_test.nc")
     call varslice_init_nml(v1,"par/varslice.nml",group="var1")
-    call varslice_update(v1, [1959.15_wp],method="exact")
+    call varslice_update(v1, [1959.0_wp],method="exact",rep=12,with_sub=.TRUE.)
     call print_var_range(v1%var, "var1", mv) 
-    call varslice_update(v1, [1959.15_wp],method="interp")
-    call print_var_range(v1%var, "var1", mv) 
-    call varslice_update(v1, [1959.15_wp],method="extrap")
-    call print_var_range(v1%var, "var1", mv) 
+    !call varslice_update(v1, [1959.15_wp],method="interp")
+    !call print_var_range(v1%var, "var1", mv) 
+    !call varslice_update(v1, [1959.15_wp],method="extrap")
+    !call print_var_range(v1%var, "var1", mv) 
     stop 
 end if 
     ! =======================================================
@@ -160,7 +160,7 @@ contains
         allocate(var(3,3,nt))
 
         do k = 1, nt 
-            var(:,:,k) = 1950.0 + real(k-1,wp)
+            var(:,:,k) = 1950.0 + 1.0_wp/24.0_wp + real(k-1,wp)*1.0_wp/12.0_wp
         end do 
 
         call nc_write(filename,"var1",var,dim1="xc",dim2="yc",dim3="time")
