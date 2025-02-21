@@ -453,7 +453,7 @@ contains
                                 case("range_mean","range_sd","range_min","range_max","range_sum")
 
                                     ! Equal weights to all values
-                                    allocate(time_wt(nt_tot))
+                                    allocate(time_wt(nt_major))
                                     time_wt = 1.0
 
                             end select
@@ -523,6 +523,10 @@ contains
 
                                         ! Get indices for current repitition
                                         call get_rep_indices(kk,i0=k,i1=nt_tot,nrep=vs%range_rep)
+                                        
+                                        write(*,*) "kk: ", k, kk
+                                        write(*,*) var(1,1,kk,1)
+                                        write(*,*) time_wt
 
                                         do j = 1, size(vs%var,2)
                                         do i = 1, size(vs%var,1)
