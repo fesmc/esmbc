@@ -523,7 +523,7 @@ contains
 
                                         ! Get indices for current repitition
                                         call get_rep_indices(kk,i0=k,i1=nt_tot,nrep=vs%range_rep)
-                                        
+
                                         write(*,*) "kk: ", k, kk
                                         write(*,*) var(1,1,kk,1)
                                         write(*,*) time_wt
@@ -780,7 +780,15 @@ contains
 
             allocate(wt_now(size(var)))
             if (present(wt)) then 
-                wt_now = wt 
+                wt_now = wt
+
+                ! Safety check
+                if (size(wt,1) .ne. size(var,1)) then
+                    write(error_unit,*) "calc_vec_value:: Error: wt vector must be the same length as the var vector."
+                    write(error_unit,*) "size(wt):  ", size(wt,1)
+                    write(error_unit,*) "size(var): ", size(var,1)
+                    stop
+                end if
             else 
                 wt_now = 1.0_wp
             end if 
