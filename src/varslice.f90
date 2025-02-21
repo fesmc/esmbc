@@ -266,9 +266,9 @@ contains
                 k0 = minval(vs%idx)
                 k1 = maxval(vs%idx)
 
-                write(*,*) "idx: ", k0, k1
-                if (k0 .gt. 0) write(*,*) vs%time(k0)
-                if (k1 .gt. 0) write(*,*) vs%time(k1)
+                !write(*,*) "idx: ", k0, k1
+                !if (k0 .gt. 0) write(*,*) vs%time(k0)
+                !if (k1 .gt. 0) write(*,*) vs%time(k1)
 
                 if (k0 .gt. 0 .and. k1 .gt. 0) then 
                     ! Dimension range is available for loading, proceed 
@@ -363,7 +363,7 @@ contains
                         slice_method = "exact"     
                     end if
 
-                    ! Now, allocate the vs%var variable to the right size 
+                    ! Now, allocate the vs%var variable to the right size
 
                     select case(trim(slice_method)) 
 
@@ -452,7 +452,7 @@ contains
 
                                 case("range_mean","range_sd","range_min","range_max","range_sum")
 
-                                    ! Equal weights to all values
+                                    ! Equal weights to all values on major axis
                                     allocate(time_wt(nt_major))
                                     time_wt = 1.0
 
@@ -467,7 +467,6 @@ contains
                                 stop
                             end if
                             
-
 
                             ! Make sure that var has at least as many values as we expect 
                             if (nt_out .gt. nt_tot) then 
@@ -523,10 +522,6 @@ contains
 
                                         ! Get indices for current repitition
                                         call get_rep_indices(kk,i0=k,i1=nt_tot,nrep=vs%range_rep)
-
-                                        write(*,*) "kk: ", k, kk
-                                        write(*,*) var(1,1,kk,1)
-                                        write(*,*) time_wt
 
                                         do j = 1, size(vs%var,2)
                                         do i = 1, size(vs%var,1)
@@ -618,7 +613,7 @@ contains
 
         if (with_sub) then
             if ( abs(x0-floor(x0)) .gt. TOL .or. abs(x1-floor(x1)) .gt. TOL) then
-                write(error_unit,*) "varslice_update:: Error: when time sub-axis is used, then the time range &
+                write(error_unit,*) "get_indices:: Error: when time sub-axis is used, then the time range &
                 & should be specified by whole numbers."
                 write(error_unit,*) "xrange: ", xrange
                 stop
@@ -633,12 +628,17 @@ contains
 
         select case(trim(slice_method))
 
-            case("exact")
+            case("exact","range","range_mean","range_sd","range_min","range_max")
 
-                do i = 1, n
-                    if (xmain(i) >= x0-TOL .and. xmain(i) <= x1+TOL) ii(i) = i
-                end do
-                
+                if ( x0-TOL .ge. xmain(1) .and. x1+TOL .le. xmain(n)) then
+                    ! All values within the range are available, proceed
+                    
+                    do i = 1, n
+                        if (xmain(i) >= x0-TOL .and. xmain(i) <= x1+TOL) ii(i) = i
+                    end do
+                    
+                end if 
+
             case("interp")
 
                 if (x0 .ne. x1) then
@@ -649,12 +649,12 @@ contains
                     stop
                 end if
 
-                if (xmain(1) <= x0-TOL .and. xmain(n) >= x0+TOL) then
+                if (x0 .ge. xmain(1)-TOL .and. x0 .le. xmain(n)+TOL) then
                     ! Interpolation is possible, proceed
                     
                     do i = 1, n-1
-                        ii(1) = i
-                        if (xmain(i) > x0-TOL) then
+                        if (x0 .gt. xmain(i)-TOL .and. x0 .le. xmain(i+1)+TOL) then
+                            ii(1) = i
                             ii(2) = i+1
                             exit
                         end if
@@ -663,33 +663,24 @@ contains
 
             case("extrap")
 
-                ! If xmin/xmax are not found in range, 
+                ! If x0 are not found in range, 
                 ! set indices to extreme bound
-                if (minval(xmain(1:n)) .gt. x0-TOL) then 
+                if (x0 .lt. xmain(1)-TOL) then 
                     ii(1) = 1
                     ii(2) = 1
-                else if (maxval(xmain(1:n)) .lt. x0+TOL) then 
-                    idx(1) = n
-                    idx(2) = n
+                else if (x0 .gt. xmain(n)+TOL) then 
+                    ii(1) = n
+                    ii(2) = n
                 else
-                    ! TO DO - fill in loop to find bracketing indices
-                    write(error_unit,*) "get_indices:: TO DO 'extrap' case."
-                    stop
-                end if
-
-            case("range","range_mean","range_sd","range_min","range_max") 
-                
-                write(*,*) "range: ", xmain(1), xmain(n), x0-TOL, x1+TOL
-
-                if ( x0-TOL .ge. xmain(1) .and. x1+TOL .le. xmain(n)) then
-                    ! All values within the range are available, proceed
-                    
-                    do i = 1, n
-                        write(*,*) i, x0-TOL, xmain(i), x1+TOL
-                        if (xmain(i) >= x0-TOL .and. xmain(i) <= x1+TOL) ii(i) = i
+                    ! Interpolation is possible, proceed
+                    do i = 1, n-1
+                        if (x0 .gt. xmain(i)-TOL .and. x0 .le. xmain(i+1)+TOL) then
+                            ii(1) = i
+                            ii(2) = i+1
+                            exit
+                        end if
                     end do
-                    
-                end if 
+                end if
 
         end select
 
