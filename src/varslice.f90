@@ -89,7 +89,7 @@ contains
 
     end subroutine varslice_map_to_grid
 
-    subroutine varslice_update(vs,time,method,fill,with_sub,rep,print_summary)
+    subroutine varslice_update(vs,time,method,fill,rep,print_summary)
         ! Routine to update transient climate forcing to match 
         ! current `time`. 
 
@@ -123,8 +123,7 @@ contains
         real(wp),         optional, intent(IN)    :: time(:)        ! [yr] Current time, or time range 
         character(len=*), optional, intent(IN)    :: method         ! slice_method (only if with_time==True)
         character(len=*), optional, intent(IN)    :: fill           ! none, min, max, mean (how to fill in missing values)
-        logical,          optional, intent(IN)    :: with_sub       ! Only if with_time==True
-        integer,          optional, intent(IN)    :: rep            ! Only if with_time==True, and with_sub==True
+        integer,          optional, intent(IN)    :: rep            ! Only if with_time==True
         logical,          optional, intent(IN)    :: print_summary  ! Print summary of updated variable
 
         ! Local variables 
@@ -147,14 +146,17 @@ contains
         par = vs%par 
         with_time = par%with_time 
 
-        if (present(with_sub)) then
-            with_time_sub = with_sub
+        if (present(rep)) then
+            range_rep     = rep
         else
-            with_time_sub = par%with_time_sub
+            range_rep     = 1 
         end if
 
-        range_rep = 1
-        if (present(rep)) range_rep = rep 
+        if (range_rep .gt. 1) then
+            with_time_sub = .TRUE.
+        else
+            with_time_sub = .FALSE.
+        end if
 
         if (with_time) then 
 
@@ -452,7 +454,7 @@ contains
 
                                     ! Calculate time weighting between two extremes
                                     allocate(time_wt(2))
-                                    if (with_sub) then
+                                    if (with_time_sub) then
                                         time_wt(2) = real(floor(time(1))-floor(vs%time(k0))) / real(floor(vs%time(k1)) - floor(vs%time(k0)))
                                         time_wt(1) = 1.0_wp - time_wt(2) 
                                     else
