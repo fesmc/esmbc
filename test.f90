@@ -19,12 +19,26 @@ program test
 if (.TRUE.) then 
     call make_test_file("var_test.nc")
     call varslice_init_nml(v1,"par/varslice.nml",group="var1")
-    ! call varslice_update(v1, [1954.0_wp,1956.0_wp],method="range_mean",with_sub=.TRUE.,rep=12)
-    ! call print_var_range(v1%var, "var1", mv) 
-    !call varslice_update(v1, [1959.15_wp],method="interp",with_sub=.FALSE.)
+    
+    !call varslice_update(v1, [1945.15_wp],method="interp",with_sub=.FALSE.)
     !call print_var_range(v1%var, "var1", mv) 
-    call varslice_update(v1, [1945.0_wp],method="extrap",with_sub=.TRUE.,rep=12)
+    call varslice_update(v1, [1959.15_wp],method="interp",with_sub=.FALSE.)
+    call print_var_range(v1%var, "var1", mv)
+    call varslice_update(v1, [1959.0_wp],method="interp",with_sub=.TRUE.,rep=12)
     call print_var_range(v1%var, "var1", mv) 
+    call varslice_update(v1, [1945.15_wp],method="extrap",with_sub=.FALSE.,rep=1)
+    call print_var_range(v1%var, "var1", mv)
+    call varslice_update(v1, [1965.15_wp],method="extrap",with_sub=.FALSE.,rep=1)
+    call print_var_range(v1%var, "var1", mv)
+    call varslice_update(v1, [1945.0_wp],method="extrap",with_sub=.TRUE.,rep=12)
+    call print_var_range(v1%var, "var1", mv)
+    call varslice_update(v1, [1965.0_wp],method="extrap",with_sub=.TRUE.,rep=12)
+    call print_var_range(v1%var, "var1", mv)
+    call varslice_update(v1, [1954.0_wp,1956.0_wp],method="range_mean",with_sub=.TRUE.,rep=12)
+    call print_var_range(v1%var, "var1", mv) 
+    call varslice_update(v1, [1951.0_wp,1959.0_wp],method="range_mean",with_sub=.TRUE.,rep=12)
+    call print_var_range(v1%var, "var1", mv) 
+    
     stop 
 end if 
     ! =======================================================

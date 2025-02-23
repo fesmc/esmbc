@@ -48,6 +48,8 @@ module varslice
                 
     end type 
 
+    logical, parameter :: verbose = .FALSE.
+
     private 
     public :: varslice_param_class
     public :: varslice_class
@@ -148,6 +150,9 @@ contains
             with_time_sub = par%with_time_sub
         end if
 
+        range_rep = 1
+        if (present(rep)) range_rep = rep 
+
         if (with_time) then 
 
             if (.not. present(time)) then 
@@ -179,9 +184,6 @@ contains
             stop
         end if
         
-        range_rep = 1
-        if (present(rep)) range_rep = rep 
-
         if (present(time)) then
 
             if (size(time) .eq. 2) then 
@@ -278,7 +280,7 @@ contains
 
                     ! Get size of time dimensions for major axis and sub axis
                     nt_rep   = vs%range_rep
-                    nt_major = nt_tot / nt_rep
+                    nt_major = max(nt_tot / nt_rep, 1)
 
                     if (nt_major .ne. int(real(nt_tot)/real(nt_rep))) then
                         write(error_unit,*) "varslice_update:: Error: number of major time axis points &
@@ -290,12 +292,14 @@ contains
                         stop
                     end if
 
-                    write(*,*) "nt_tot:   ", nt_tot
-                    write(*,*) "nt_rep:   ", nt_rep
-                    write(*,*) "nt_major: ", nt_major
-                    
-                    ! write(*,*) "time: ", vs%time_range, k0, k1 
-                    ! write(*,*) "      ", vs%time(k0), vs%time(k1)
+                    if (verbose) then
+                        write(*,*) "nt_tot:   ", nt_tot
+                        write(*,*) "nt_rep:   ", nt_rep
+                        write(*,*) "nt_major: ", nt_major
+                        ! write(*,*) "time: ", vs%time_range, k0, k1 
+                        ! write(*,*) "      ", vs%time(k0), vs%time(k1)
+                    end if
+                        
 
                     if (allocated(var)) deallocate(var) 
 
@@ -470,7 +474,6 @@ contains
                                 stop
                             end if
                             
-
                             ! Make sure that var has at least as many values as we expect 
                             if (nt_out .gt. nt_tot) then 
                                 write(*,*) "varslice_update:: Error: the specified time range &
@@ -696,13 +699,15 @@ contains
             idx(1) = -1
         end if
 
-        write(*,*) "get_indices: ", x0, x1, slice_method, with_sub
-        !write(*,*) "x: ", xmain(1:n)
-        write(*,*) "nidx: ", nidx
-        !write(*,*) "idx: ", pack(ii,ii.gt.0)
-        write(*,*) "idx: ", idx
-        write(*,*) "x:   ", x(idx)
-        
+        if (verbose) then
+            write(*,*) "get_indices: ", x0, x1, slice_method, with_sub
+            !write(*,*) "x: ", xmain(1:n)
+            write(*,*) "nidx: ", nidx
+            !write(*,*) "idx: ", pack(ii,ii.gt.0)
+            write(*,*) "idx: ", idx
+            write(*,*) "x:   ", x(idx)
+        end if
+
         return
 
     end subroutine get_indices
