@@ -9,6 +9,8 @@ module varslice
 
     implicit none 
 
+    logical, parameter :: verbose = .FALSE.
+
     type varslice_param_class
 
         character(len=1024) :: filename
@@ -48,8 +50,6 @@ module varslice
                 
     end type 
 
-    logical, parameter :: verbose = .FALSE.
-
     private 
     public :: varslice_param_class
     public :: varslice_class
@@ -59,6 +59,8 @@ module varslice
     public :: varslice_init_data
     public :: varslice_end 
 
+    public :: print_var_range
+    
 contains
 
     subroutine varslice_map_to_grid(vs_tgt,vs_src,mps)
@@ -87,7 +89,7 @@ contains
 
     end subroutine varslice_map_to_grid
 
-    subroutine varslice_update(vs,time,method,fill,with_sub,rep)
+    subroutine varslice_update(vs,time,method,fill,with_sub,rep,print_summary)
         ! Routine to update transient climate forcing to match 
         ! current `time`. 
 
@@ -123,7 +125,8 @@ contains
         character(len=*), optional, intent(IN)    :: fill           ! none, min, max, mean (how to fill in missing values)
         logical,          optional, intent(IN)    :: with_sub       ! Only if with_time==True
         integer,          optional, intent(IN)    :: rep            ! Only if with_time==True, and with_sub==True
-        
+        logical,          optional, intent(IN)    :: print_summary  ! Print summary of updated variable
+
         ! Local variables 
         integer :: k, k0, k1, nt
         integer :: nt_tot, nt_rep, nt_major, nt_out
@@ -582,6 +585,12 @@ contains
             
         end if 
 
+        if (present(print_summary)) then
+            if (print_summary) then
+                call print_var_range(vs%var, trim(slice_method), mv) 
+            end if
+        end if
+
         return 
 
     end subroutine varslice_update
@@ -638,7 +647,7 @@ contains
 
             case("exact","range","range_mean","range_sd","range_min","range_max")
 
-                if ( x0-TOL .ge. xmain(1) .and. x1+TOL .le. xmain(n)) then
+                if ( x0 .ge. xmain(1)-TOL .and. x1 .le. xmain(n)+TOL) then
                     ! All values within the range are available, proceed
                     
                     do i = 1, n
@@ -1300,5 +1309,35 @@ contains
         return
 
     end subroutine axis_init
+
+    subroutine print_var_range(var,name,mv,time)
+
+        implicit none 
+
+        real(wp),         intent(IN) :: var(:,:,:,:) 
+        character(len=*), intent(IN) :: name
+        real(wp),         intent(IN) :: mv 
+        real(wp), intent(IN), optional :: time 
+
+        ! Local variables 
+        real(wp) :: vmin, vmax 
+
+        if (count(var.ne.mv) .gt. 0) then 
+            vmin = minval(var,mask=var.ne.mv)
+            vmax = maxval(var,mask=var.ne.mv)
+        else 
+            vmin = mv 
+            vmax = mv 
+        end if 
+
+        if (present(time)) then 
+            write(*,"(f10.1,2x,a10,a3,2f14.3)") time, trim(name), ": ", vmin, vmax
+        else 
+            write(*,"(10x,2x,a10,a3,2f14.3)") trim(name), ": ", vmin, vmax
+        end if 
+
+        return 
+
+    end subroutine print_var_range
 
 end module varslice
