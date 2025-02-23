@@ -21,9 +21,9 @@ if (.TRUE.) then
     call varslice_init_nml(v1,"par/varslice.nml",group="var1")
     ! call varslice_update(v1, [1954.0_wp,1956.0_wp],method="range_mean",with_sub=.TRUE.,rep=12)
     ! call print_var_range(v1%var, "var1", mv) 
-    ! call varslice_update(v1, [1959.15_wp],method="interp",with_sub=.FALSE.)
-    ! call print_var_range(v1%var, "var1", mv) 
-    call varslice_update(v1, [1961.0_wp],method="extrap",with_sub=.TRUE.,rep=12)
+    !call varslice_update(v1, [1959.15_wp],method="interp",with_sub=.FALSE.)
+    !call print_var_range(v1%var, "var1", mv) 
+    call varslice_update(v1, [1949.0_wp],method="extrap",with_sub=.TRUE.,rep=12)
     call print_var_range(v1%var, "var1", mv) 
     stop 
 end if 

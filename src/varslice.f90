@@ -357,10 +357,10 @@ contains
                     ! to exact 
                     if ( (trim(vs%slice_method) .eq. "interp" .or. & 
                           trim(vs%slice_method) .eq. "extrap") .and. &
-                          vs%time(k0) .eq. vs%time(k1)) then 
+                          nt_major .eq. 1) then 
                         ! Same time is given for upper and lower bound
 
-                        slice_method = "exact"     
+                        slice_method = "exact"
                     end if
 
                     ! Now, allocate the vs%var variable to the right size
@@ -429,7 +429,7 @@ contains
                                     
                                     if (nt_tot .ne. 2*nt_out) then 
                                         write(*,*) "varslice_update:: Error: something went wrong during &
-                                        &interpolation. More than 2 major time slices are available to interpolate &
+                                        &interpolation. Exactly 2 major time slices should be available to interpolate &
                                         &between. Check!"
                                         write(*,*) "nt_tot   = ", nt_tot
                                         write(*,*) "rep      = ", nt_out 
@@ -438,6 +438,9 @@ contains
                                         write(*,*) "indices k0, k1: ", k0, k1 
                                         write(*,*) "times : ", vs%time(k0:k1) 
                                         stop 
+                                        ! Remember that if nt_tot==nt_out, this means that nt_major=1,
+                                        ! and so only one time slice was available. So the method was
+                                        ! changed to 'exact'.
                                     end if 
 
                                     ! Calculate time weighting between two extremes
@@ -586,16 +589,18 @@ contains
         
         implicit none
         
-        integer,  allocatable, intent(INOUT) :: idx(:)  ! Output indices
-        real(wp), intent(IN)    :: x(:)                 ! Time array in years
-        real(wp), intent(IN)    :: xrange(:)            ! [Start, End] x (inclusive) or [x_interp]
-        character(len=*), intent(IN) :: slice_method    ! method = "exact", "interp", "extrap"
-        logical,   intent(IN)   :: with_sub             ! Use fractional time unit too
+        integer,  allocatable, intent(INOUT) :: idx(:)          ! Output indices
+        real(wp),              intent(IN)    :: x(:)            ! Time array in years
+        real(wp),              intent(IN)    :: xrange(:)       ! [Start, End] x (inclusive) or [x_interp]
+        character(len=*),      intent(IN)    :: slice_method    ! method = "exact", "interp", "extrap"
+        logical,               intent(IN)    :: with_sub        ! Use fractional time unit too
 
         ! Local variables
-        integer :: i, n, nidx
+        integer :: i, n, nidx, i1, ni
         integer :: ii(10000)
         real(wp) :: xmain(10000)
+        real(wp) :: dist(10000)
+        real(wp) :: dist_min_lo, dist_min_hi
         real(wp) :: x0, x1
 
         n     = size(x)
@@ -639,49 +644,44 @@ contains
                     
                 end if 
 
-            case("interp")
-
-                if (x0 .ne. x1) then
-                    write(error_unit,*) "get_indices:: Error: for method='interp', &
-                    &only one interpolation value should be provided."
-                    write(error_unit,*) "x0: ", x0
-                    write(error_unit,*) "x1: ", x1
-                    stop
-                end if
+            case("interp","extrap")
 
                 if (x0 .ge. xmain(1)-TOL .and. x0 .le. xmain(n)+TOL) then
                     ! Interpolation is possible, proceed
                     
-                    do i = 1, n-1
-                        if (x0 .gt. xmain(i)-TOL .and. x0 .le. xmain(i+1)+TOL) then
-                            ii(1) = i
-                            ii(2) = i+1
-                            exit
+                    dist = x0 - xmain(1:n)
+                    dist_min_lo = maxval(dist(1:n),mask=dist(1:n).lt.0.0)
+                    dist_min_hi = minval(dist(1:n),mask=dist(1:n).ge.0.0)
+
+                    do i = 1, n
+                        if (dist(i) .eq. dist_min_lo .or. dist(i) .eq. dist_min_hi) then
+                            ii(i) = i
                         end if
                     end do
+                
+                else if (trim(slice_method) .eq. "extrap") then
+                    ! Interp value is above or below bounds, and extrapolation is desired
+
+                    if (x0 .lt. xmain(1)-TOL) then
+                        dist = x0 - xmain(1:n)
+                        dist_min_lo = maxval(dist(1:n),mask=dist(1:n).lt.0.0)
+                        do i = 1, n
+                            if (dist(i) .eq. dist_min_lo) then
+                                ii(i) = i
+                            end if
+                        end do
+                    else if (x0 .gt. xmain(n)+TOL) then
+                        dist = x0 - xmain(1:n)
+                        dist_min_hi = minval(dist(1:n),mask=dist(1:n).ge.0.0)
+                        do i = 1, n
+                            if (dist(i) .eq. dist_min_hi) then
+                                ii(i) = i
+                            end if
+                        end do
+                    end if
+
                 end if
-
-            case("extrap")
-
-                ! If x0 are not found in range, 
-                ! set indices to extreme bound
-                if (x0 .lt. xmain(1)-TOL) then 
-                    ii(1) = 1
-                    ii(2) = 1
-                else if (x0 .gt. xmain(n)+TOL) then 
-                    ii(1) = n
-                    ii(2) = n
-                else
-                    ! Interpolation is possible, proceed
-                    do i = 1, n-1
-                        if (x0 .gt. xmain(i)-TOL .and. x0 .le. xmain(i+1)+TOL) then
-                            ii(1) = i
-                            ii(2) = i+1
-                            exit
-                        end if
-                    end do
-                end if
-
+                
         end select
 
         nidx = count(ii .gt. 0)
@@ -699,7 +699,7 @@ contains
         write(*,*) "get_indices: ", x0, x1, slice_method, with_sub
         !write(*,*) "x: ", xmain(1:n)
         write(*,*) "nidx: ", nidx
-        write(*,*) "idx: ", ii(1:nidx)
+        !write(*,*) "idx: ", pack(ii,ii.gt.0)
         write(*,*) "idx: ", idx
         write(*,*) "x:   ", x(idx)
         
