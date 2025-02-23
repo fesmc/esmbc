@@ -23,7 +23,7 @@ if (.TRUE.) then
     ! call print_var_range(v1%var, "var1", mv) 
     !call varslice_update(v1, [1959.15_wp],method="interp",with_sub=.FALSE.)
     !call print_var_range(v1%var, "var1", mv) 
-    call varslice_update(v1, [1949.0_wp],method="extrap",with_sub=.TRUE.,rep=12)
+    call varslice_update(v1, [1945.0_wp],method="extrap",with_sub=.TRUE.,rep=12)
     call print_var_range(v1%var, "var1", mv) 
     stop 
 end if 
