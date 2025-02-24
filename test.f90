@@ -18,6 +18,8 @@ program test
     ! Testing methods on one varslice variable ==============
 if (.TRUE.) then 
     call make_test_file("var_test.nc",t0=1950.0_wp,dt=1.0_wp/12.0_wp,nt=11*12)
+    
+    
     call varslice_init_nml(v1,"par/varslice.nml",group="var1")
     
     call varslice_update(v1, [1945.15_wp],method="interp",rep=1, print_summary=.TRUE.)
@@ -31,6 +33,8 @@ if (.TRUE.) then
     call varslice_update(v1, [1954.0_wp,1956.0_wp],method="range",     rep=12,print_summary=.TRUE.)
     call varslice_update(v1, [1954.0_wp,1956.0_wp],method="range_mean",rep=12,print_summary=.TRUE.)
     call varslice_update(v1, [1950.0_wp,1960.0_wp],method="range_mean",rep=12,print_summary=.TRUE.)
+
+    call varslice_update(v1, [1959.0_wp], method="exact",rep=12,print_summary=.TRUE.)
     
     stop 
 end if 
