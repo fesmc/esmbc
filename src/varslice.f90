@@ -937,23 +937,34 @@ contains
         logical :: with_time 
         logical :: with_time_sub
         real(wp) :: dt 
-        integer  :: k 
+        integer  :: i, k 
+        integer  :: nt
+        integer, allocatable :: dim_now(:)
+        character(len=1024)  :: filename_dims
 
         ! Local shortcut
         with_time       = vs%par%with_time 
         with_time_sub   = vs%par%with_time_sub 
 
+        ! Store the first filename locally, to be used for getting variable dimensions (except time)
+        filename_dims = vs%par%filenames(1)
+
         ! First make sure all data objects are deallocated 
         call varslice_end(vs)
 
-        ! Get information from netcdf file 
-        call nc_dims(vs%par%filename,vs%par%name,dim_names,vs%dim)
+        ! Get information from netcdf file - first file in case their are multiple sources 
+        call nc_dims(filename_dims,vs%par%name,dim_names,vs%dim)
         vs%par%ndim = size(vs%dim,1)
 
-! == TO DO ==
-
-! Handle dimensions from multiple files!!
-
+        ! Determine total time dimension size from multiple files!
+        if (with_time .and. size(vs%par%filenames,1) .gt. 1) then
+            nt = 0
+            do i = 1, size(vs%par%filenames,1)
+                call nc_dims(vs%par%filenames(i),vs%par%name,dim_names,dim_now)
+                nt = nt + dim_now(vs%par%ndim)
+            end do
+            vs%dim(vs%par%ndim) = nt
+        end if
 
 ! ======== TO DO =============
 ! In the case, of using nc_read_interp, data in arrays will have shape nx,ny
@@ -1019,6 +1030,12 @@ contains
                 write(*,*) "size(time):  ", size(vs%time,1)
                 write(*,*) "nt (netcdf): ", vs%dim(vs%par%ndim)
                 write(*,*) "filename:    ", trim(vs%par%filename)
+                if (size(vs%par%filenames,1) .gt. 1) then
+                    write(*,*) "filenames     = "
+                    do i = 1, size(vs%par%filenames,1)
+                        write(*,*) "                  ", trim(vs%par%filenames(i))
+                    end do
+                end if
                 write(*,*) 
                 write(*,*) "time = ", vs%time
                 stop 
@@ -1041,8 +1058,8 @@ contains
                     allocate(vs%x(vs%dim(1)))
                     allocate(vs%var(vs%dim(1),1,1,1))
 
-                    if (nc_exists_var(vs%par%filename,dim_names(1))) then 
-                        call nc_read(vs%par%filename,dim_names(1),vs%x)
+                    if (nc_exists_var(filename_dims,dim_names(1))) then 
+                        call nc_read(filename_dims,dim_names(1),vs%x)
                     else
                         call axis_init(vs%x,nx=vs%dim(1))
                     end if
@@ -1051,13 +1068,13 @@ contains
                     allocate(vs%y(vs%dim(2)))
                     allocate(vs%var(vs%dim(1),vs%dim(2),1,1))
 
-                    if (nc_exists_var(vs%par%filename,dim_names(1))) then 
-                        call nc_read(vs%par%filename,dim_names(1),vs%x)
+                    if (nc_exists_var(filename_dims,dim_names(1))) then 
+                        call nc_read(filename_dims,dim_names(1),vs%x)
                     else
                         call axis_init(vs%x,nx=vs%dim(1))
                     end if
-                    if (nc_exists_var(vs%par%filename,dim_names(2))) then 
-                        call nc_read(vs%par%filename,dim_names(2),vs%y)
+                    if (nc_exists_var(filename_dims,dim_names(2))) then 
+                        call nc_read(filename_dims,dim_names(2),vs%y)
                     else
                         call axis_init(vs%y,nx=vs%dim(2))
                     end if
@@ -1070,13 +1087,13 @@ contains
                     allocate(vs%y(vs%dim(2)))
                     allocate(vs%var(vs%dim(1),vs%dim(2),1,1))
 
-                    if (nc_exists_var(vs%par%filename,dim_names(1))) then 
-                        call nc_read(vs%par%filename,dim_names(1),vs%x)
+                    if (nc_exists_var(filename_dims,dim_names(1))) then 
+                        call nc_read(filename_dims,dim_names(1),vs%x)
                     else
                         call axis_init(vs%x,nx=vs%dim(1))
                     end if
-                    if (nc_exists_var(vs%par%filename,dim_names(2))) then 
-                        call nc_read(vs%par%filename,dim_names(2),vs%y)
+                    if (nc_exists_var(filename_dims,dim_names(2))) then 
+                        call nc_read(filename_dims,dim_names(2),vs%y)
                     else
                         call axis_init(vs%y,nx=vs%dim(2))
                     end if
@@ -1087,18 +1104,18 @@ contains
                     allocate(vs%z(vs%dim(3)))
                     allocate(vs%var(vs%dim(1),vs%dim(2),vs%dim(3),1))
 
-                    if (nc_exists_var(vs%par%filename,dim_names(1))) then 
-                        call nc_read(vs%par%filename,dim_names(1),vs%x)
+                    if (nc_exists_var(filename_dims,dim_names(1))) then 
+                        call nc_read(filename_dims,dim_names(1),vs%x)
                     else
                         call axis_init(vs%x,nx=vs%dim(1))
                     end if
-                    if (nc_exists_var(vs%par%filename,dim_names(2))) then 
-                        call nc_read(vs%par%filename,dim_names(2),vs%y)
+                    if (nc_exists_var(filename_dims,dim_names(2))) then 
+                        call nc_read(filename_dims,dim_names(2),vs%y)
                     else
                         call axis_init(vs%y,nx=vs%dim(2))
                     end if
-                    if (nc_exists_var(vs%par%filename,dim_names(3))) then 
-                        call nc_read(vs%par%filename,dim_names(3),vs%z)
+                    if (nc_exists_var(filename_dims,dim_names(3))) then 
+                        call nc_read(filename_dims,dim_names(3),vs%z)
                     else
                         call axis_init(vs%z,nx=vs%dim(3))
                     end if
@@ -1112,18 +1129,18 @@ contains
                     allocate(vs%z(vs%dim(3)))
                     allocate(vs%var(vs%dim(1),vs%dim(2),vs%dim(3),1))
 
-                    if (nc_exists_var(vs%par%filename,dim_names(1))) then 
-                        call nc_read(vs%par%filename,dim_names(1),vs%x)
+                    if (nc_exists_var(filename_dims,dim_names(1))) then 
+                        call nc_read(filename_dims,dim_names(1),vs%x)
                     else
                         call axis_init(vs%x,nx=vs%dim(1))
                     end if
-                    if (nc_exists_var(vs%par%filename,dim_names(2))) then 
-                        call nc_read(vs%par%filename,dim_names(2),vs%y)
+                    if (nc_exists_var(filename_dims,dim_names(2))) then 
+                        call nc_read(filename_dims,dim_names(2),vs%y)
                     else
                         call axis_init(vs%y,nx=vs%dim(2))
                     end if
-                    if (nc_exists_var(vs%par%filename,dim_names(3))) then 
-                        call nc_read(vs%par%filename,dim_names(3),vs%z)
+                    if (nc_exists_var(filename_dims,dim_names(3))) then 
+                        call nc_read(filename_dims,dim_names(3),vs%z)
                     else
                         call axis_init(vs%z,nx=vs%dim(3))
                     end if
