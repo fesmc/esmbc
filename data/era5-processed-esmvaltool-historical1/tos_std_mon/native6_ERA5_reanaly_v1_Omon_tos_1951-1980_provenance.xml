@@ -1,0 +1,352 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<prov:document xmlns:recipe="https://www.esmvaltool.org/recipe" xmlns:attribute="https://www.esmvaltool.org/attribute" xmlns:project="https://www.esmvaltool.org/project" xmlns:author="https://www.esmvaltool.org/author" xmlns:software="https://www.esmvaltool.org/software" xmlns:file="https://www.esmvaltool.org/file" xmlns:task="https://www.esmvaltool.org/task" xmlns:preprocessor="https://www.esmvaltool.org/preprocessor" xmlns:prov="http://www.w3.org/ns/prov#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1979_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:22:28 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1979, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:21:27 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data9/adaptor.mars.internal-1722576086.8954725-13469-8-d59dff7d-8d77-45ee-808f-f1b61edcea8b.nc /cache/tmp/d59dff7d-8d77-45ee-808f-f1b61edcea8b-adaptor.mars.internal-1722576082.8335605-13469-3-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1980_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1971_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1956_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:21:34 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1956, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:21:12 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data6/adaptor.mars.internal-1722576072.2713196-721-11-1e17dded-1233-46ab-a691-921cf852da37.nc /cache/tmp/1e17dded-1233-46ab-a691-921cf852da37-adaptor.mars.internal-1722576070.2189486-721-7-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1964_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1978_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1975_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:22:26 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1975, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:22:10 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data6/adaptor.mars.internal-1722576130.0282652-21978-5-b92b60c3-02ca-43cc-bf5f-9a3905b700cd.nc /cache/tmp/b92b60c3-02ca-43cc-bf5f-9a3905b700cd-adaptor.mars.internal-1722576127.6710334-21978-2-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1966_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1963_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:23:56 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1963, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:23:44 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data0/adaptor.mars.internal-1722576224.0724978-9837-4-7bbec950-6ba3-49f9-8128-a765fc885e38.nc /cache/tmp/7bbec950-6ba3-49f9-8128-a765fc885e38-adaptor.mars.internal-1722576221.4984732-9837-2-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1970_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1972_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1969_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:25:54 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1969, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:24:45 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data9/adaptor.mars.internal-1722576285.212122-19048-12-4875d6b5-bd6d-4b52-9642-c53e11d48acb.nc /cache/tmp/4875d6b5-bd6d-4b52-9642-c53e11d48acb-adaptor.mars.internal-1722576283.683651-19048-8-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1957_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:24:04 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1957, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:23:30 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data0/adaptor.mars.internal-1722576209.6903443-19930-6-3040b87e-03be-4e5e-b81a-c662a1ef9438.nc /cache/tmp/3040b87e-03be-4e5e-b81a-c662a1ef9438-adaptor.mars.internal-1722576206.9765253-19930-6-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1954_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:20:25 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1954, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:20:10 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data0/adaptor.mars.internal-1722576009.8363123-4498-9-d86231ab-2494-4656-88ea-4113a8aea779.nc /cache/tmp/d86231ab-2494-4656-88ea-4113a8aea779-adaptor.mars.internal-1722576003.0400352-4498-6-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1957_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1968_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:21:27 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1968, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:21:15 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data7/adaptor.mars.internal-1722576075.2886016-2370-11-3c8bbee9-afad-427a-bc94-cdda6975b36f.nc /cache/tmp/3c8bbee9-afad-427a-bc94-cdda6975b36f-adaptor.mars.internal-1722576073.8866441-2370-9-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1955_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:23:57 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1955, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:23:22 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data8/adaptor.mars.internal-1722576201.9340038-31344-1-4f697887-1cb9-496c-aa15-f8df19b35a8d.nc /cache/tmp/4f697887-1cb9-496c-aa15-f8df19b35a8d-adaptor.mars.internal-1722576198.0573955-31344-1-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1965_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1969_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1972_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:25:53 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1972, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:24:32 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data4/adaptor.mars.internal-1722576272.2524588-14201-1-fe1799c2-bd1a-4f47-ad35-47f2ac0e4b96.nc /cache/tmp/fe1799c2-bd1a-4f47-ad35-47f2ac0e4b96-adaptor.mars.internal-1722576270.344699-14201-1-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:entity prov:id="recipe:recipe_obs_historical_tas_tos_pr.yml">
+    <attribute:description>The recipe regrids the data to a 5x5 grid and provides the climatological average and standard deviations for the entire historical period as well as for four shorter periods within that period.</attribute:description>
+    <attribute:references>[]</attribute:references>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1962_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1979_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1961_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1964_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:20:49 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1964, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:20:46 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data9/adaptor.mars.internal-1722576045.3839374-32324-2-ba0ab5a7-7f56-40c0-86a6-b91c3054f984.nc /cache/tmp/ba0ab5a7-7f56-40c0-86a6-b91c3054f984-adaptor.mars.internal-1722576041.759137-32324-1-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1960_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1958_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:24:07 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1958, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:22:46 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data0/adaptor.mars.internal-1722576165.5153637-28427-7-46a85ffd-830c-469b-9141-3762cff45f8b.nc /cache/tmp/46a85ffd-830c-469b-9141-3762cff45f8b-adaptor.mars.internal-1722576162.9615128-28427-5-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1976_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1952_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:25:53 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1952, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:24:29 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data2/adaptor.mars.internal-1722576268.739043-11463-13-946bede2-50d2-4893-9202-86d818aa4229.nc /cache/tmp/946bede2-50d2-4893-9202-86d818aa4229-adaptor.mars.internal-1722576266.2635734-11463-13-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1963_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1965_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:23:52 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1965, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:23:04 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data0/adaptor.mars.internal-1722576183.4328637-16351-13-46f6dce9-739d-49b7-a1b0-63c13f7b798e.nc /cache/tmp/46f6dce9-739d-49b7-a1b0-63c13f7b798e-adaptor.mars.internal-1722576174.6716614-16351-6-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1967_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:23:52 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1967, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:23:25 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data6/adaptor.mars.internal-1722576205.319236-31925-9-e9fb9312-f23d-4f8c-a29a-fffa4dd89c19.nc /cache/tmp/e9fb9312-f23d-4f8c-a29a-fffa4dd89c19-adaptor.mars.internal-1722576203.604377-31925-6-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1977_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1955_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1966_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:21:24 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1966, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:20:49 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data2/adaptor.mars.internal-1722576048.4751148-13920-6-00ec07eb-2135-4f34-87d1-5c1edf07c0eb.nc /cache/tmp/00ec07eb-2135-4f34-87d1-5c1edf07c0eb-adaptor.mars.internal-1722576047.075239-13920-5-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1951_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1974_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:25:58 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1974, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:24:21 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data8/adaptor.mars.internal-1722576260.4272218-12615-7-f55dea94-735f-402d-a909-c094a7aca5b8.nc /cache/tmp/f55dea94-735f-402d-a909-c094a7aca5b8-adaptor.mars.internal-1722576258.737849-12615-4-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1973_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:23:51 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1973, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:22:49 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data8/adaptor.mars.internal-1722576169.0579505-32324-7-f12ad0cb-7dd0-4293-908a-103743cdb118.nc /cache/tmp/f12ad0cb-7dd0-4293-908a-103743cdb118-adaptor.mars.internal-1722576167.2433462-32324-4-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1958_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:wasStartedBy>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+    <prov:trigger prov:ref="recipe:recipe_obs_historical_tas_tos_pr.yml"/>
+    <prov:starter prov:ref="software:esmvaltool==2.11.1"/>
+  </prov:wasStartedBy>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1975_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1976_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:19:52 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1976, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:19:48 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data4/adaptor.mars.internal-1722575988.3322616-2329-8-675035af-8dab-4b40-b60d-6019b770eff5.nc /cache/tmp/675035af-8dab-4b40-b60d-6019b770eff5-adaptor.mars.internal-1722575986.3438928-2329-6-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1959_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1980_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:21:32 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1980, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:20:55 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data4/adaptor.mars.internal-1722576054.9240832-5055-8-9f256825-d9fe-4d2c-ae06-3fc134dc8aa6.nc /cache/tmp/9f256825-d9fe-4d2c-ae06-3fc134dc8aa6-adaptor.mars.internal-1722576053.0190525-5055-6-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1954_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc">
+    <attribute:activity>CMIP</attribute:activity>
+    <attribute:alias>ERA5</attribute:alias>
+    <attribute:dataset>ERA5</attribute:dataset>
+    <attribute:diagnostic>historical1</attribute:diagnostic>
+    <attribute:end_year>1980</attribute:end_year>
+    <attribute:exp>historical</attribute:exp>
+    <attribute:filename>/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc</attribute:filename>
+    <attribute:frequency>mon</attribute:frequency>
+    <attribute:long_name>Sea Surface Temperature</attribute:long_name>
+    <attribute:mip>Omon</attribute:mip>
+    <attribute:modeling_realm>['ocean']</attribute:modeling_realm>
+    <attribute:original_short_name>tos</attribute:original_short_name>
+    <attribute:preprocessor>standard_dev_monthly</attribute:preprocessor>
+    <attribute:project>native6</attribute:project>
+    <attribute:recipe_dataset_index>0</attribute:recipe_dataset_index>
+    <attribute:short_name>tos</attribute:short_name>
+    <attribute:standard_name>sea_surface_temperature</attribute:standard_name>
+    <attribute:start_year>1951</attribute:start_year>
+    <attribute:tier>3</attribute:tier>
+    <attribute:timerange>1951/1980</attribute:timerange>
+    <attribute:type>reanaly</attribute:type>
+    <attribute:units>degC</attribute:units>
+    <attribute:variable_group>tos_std_mon</attribute:variable_group>
+    <attribute:variable_long_name>Sea Surface Temperature</attribute:variable_long_name>
+    <attribute:version>v1</attribute:version>
+    <preprocessor:climate_statistics>{'operator': 'std_dev', 'period': 'monthly'}</preprocessor:climate_statistics>
+    <preprocessor:regrid>{'target_grid': '5x5', 'scheme': 'linear'}</preprocessor:regrid>
+    <preprocessor:remove_supplementary_variables>{}</preprocessor:remove_supplementary_variables>
+    <preprocessor:save>{'compress': False, 'filename': PosixPath('/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc')}</preprocessor:save>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1967_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1961_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:21:26 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1961, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:21:05 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data7/adaptor.mars.internal-1722576064.9614694-26485-15-97ec5e16-b63b-4b8c-85ef-10a7f9b613ad.nc /cache/tmp/97ec5e16-b63b-4b8c-85ef-10a7f9b613ad-adaptor.mars.internal-1722576060.663305-26485-8-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1968_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1974_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:activity prov:id="task:historical1/tos_std_mon"/>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1970_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:25:56 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1970, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:24:42 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data8/adaptor.mars.internal-1722576282.0549924-13227-1-3cd85b48-bd39-4a21-a75b-ffa532b7e62d.nc /cache/tmp/3cd85b48-bd39-4a21-a75b-ffa532b7e62d-adaptor.mars.internal-1722576280.551851-13227-1-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1978_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:23:52 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1978, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:22:24 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data8/adaptor.mars.internal-1722576143.5298717-16678-14-2cbadfe1-d5a3-4125-abd5-e4da5e4c79a1.nc /cache/tmp/2cbadfe1-d5a3-4125-abd5-e4da5e4c79a1-adaptor.mars.internal-1722576138.9302893-16678-8-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasAttributedTo>
+    <prov:entity prov:ref="recipe:recipe_obs_historical_tas_tos_pr.yml"/>
+    <prov:agent prov:ref="author:Grusdt, Britta"/>
+  </prov:wasAttributedTo>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1951_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:25:53 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1951, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:24:13 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data7/adaptor.mars.internal-1722576252.6621044-12501-1-4a09d809-6407-4a3d-9a0b-1f6e1ab69524.nc /cache/tmp/4a09d809-6407-4a3d-9a0b-1f6e1ab69524-adaptor.mars.internal-1722576249.1861575-12501-1-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1959_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:26:00 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1959, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:24:04 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data7/adaptor.mars.internal-1722576244.2603397-14913-1-7f7eeb47-a425-40ac-83a0-e72e5fe579e5.nc /cache/tmp/7f7eeb47-a425-40ac-83a0-e72e5fe579e5-adaptor.mars.internal-1722576242.7620163-14913-1-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1956_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1973_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1971_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:20:27 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1971, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:20:15 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data6/adaptor.mars.internal-1722576015.038632-18508-7-66728760-4b8a-4997-880e-38c06d99e36b.nc /cache/tmp/66728760-4b8a-4997-880e-38c06d99e36b-adaptor.mars.internal-1722576011.620723-18508-5-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:activity prov:id="software:esmvaltool==2.11.1"/>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1953_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:agent prov:id="author:Grusdt, Britta">
+    <attribute:institute>AWI, Germany</attribute:institute>
+  </prov:agent>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1962_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:22:30 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1962, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:22:13 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data6/adaptor.mars.internal-1722576133.3243613-28427-4-42d649df-b57b-4d53-b656-7632055d024d.nc /cache/tmp/42d649df-b57b-4d53-b656-7632055d024d-adaptor.mars.internal-1722576131.6654902-28427-3-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1977_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:22:24 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1977, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:22:06 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data8/adaptor.mars.internal-1722576126.103264-29797-5-9d098b79-2a8d-4efc-bfdc-1d26715bd813.nc /cache/tmp/9d098b79-2a8d-4efc-bfdc-1d26715bd813-adaptor.mars.internal-1722576124.1374955-29797-4-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1953_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:26:00 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1953, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:23:53 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data4/adaptor.mars.internal-1722576233.2045481-26997-1-d5e28176-2908-4641-a5f6-1252d54176c4.nc /cache/tmp/d5e28176-2908-4641-a5f6-1252d54176c4-adaptor.mars.internal-1722576230.7434413-26997-1-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1960_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-02 05:23:52 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'sea_surface_temperature', 'year': 1960, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-02 05:23:33 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data2/adaptor.mars.internal-1722576212.5855062-15637-15-16ed7582-4ed4-4296-9217-1caa77b6b6bd.nc /cache/tmp/16ed7582-4ed4-4296-9217-1caa77b6b6bd-adaptor.mars.internal-1722576211.3185937-15637-12-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_std_mon/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/tos/era5_sea_surface_temperature_1952_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/tos_std_mon"/>
+  </prov:wasDerivedFrom>
+</prov:document>

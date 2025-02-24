@@ -1,0 +1,26 @@
+? /albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_CLIM_sea/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc
+: activity: CMIP
+  alias: ERA5
+  dataset: ERA5
+  diagnostic: historical1
+  end_year: 1980
+  exp: historical
+  filename: /albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/tos_CLIM_sea/native6_ERA5_reanaly_v1_Omon_tos_1951-1980.nc
+  frequency: mon
+  long_name: Sea Surface Temperature
+  mip: Omon
+  modeling_realm:
+  - ocean
+  preprocessor: climatological_mean_sea
+  project: native6
+  recipe_dataset_index: 0
+  short_name: tos
+  standard_name: sea_surface_temperature
+  start_year: 1951
+  tier: 3
+  timerange: 1951/1980
+  type: reanaly
+  units: degC
+  variable_group: tos_CLIM_sea
+  variable_long_name: Sea Surface Temperature
+  version: v1

@@ -1,0 +1,352 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<prov:document xmlns:recipe="https://www.esmvaltool.org/recipe" xmlns:attribute="https://www.esmvaltool.org/attribute" xmlns:project="https://www.esmvaltool.org/project" xmlns:author="https://www.esmvaltool.org/author" xmlns:software="https://www.esmvaltool.org/software" xmlns:file="https://www.esmvaltool.org/file" xmlns:task="https://www.esmvaltool.org/task" xmlns:preprocessor="https://www.esmvaltool.org/preprocessor" xmlns:prov="http://www.w3.org/ns/prov#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1969_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1973_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1953_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1961_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:31:51 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1961, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:31:47 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data7/adaptor.mars.internal-1722515506.803829-22227-8-54eed934-7e68-4230-b65c-2f62dac87d34.nc /cache/tmp/54eed934-7e68-4230-b65c-2f62dac87d34-adaptor.mars.internal-1722515494.847688-22227-5-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1959_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1953_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:34:00 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1953, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:33:27 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data9/adaptor.mars.internal-1722515607.5574188-21664-7-1a3cb3ae-cd61-472b-b05f-fc700f115b7e.nc /cache/tmp/1a3cb3ae-cd61-472b-b05f-fc700f115b7e-adaptor.mars.internal-1722515603.8779593-21664-2-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1963_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:32:21 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1963, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:32:05 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data2/adaptor.mars.internal-1722515524.7719905-1706-5-07d62027-d0ef-4c5f-b17d-e16e6e77a565.nc /cache/tmp/07d62027-d0ef-4c5f-b17d-e16e6e77a565-adaptor.mars.internal-1722515522.672479-1706-3-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1960_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1965_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:35:22 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1965, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:34:49 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data6/adaptor.mars.internal-1722515689.3166711-2073-8-01feddb0-4b1a-4faf-bf4d-e1dbc3e4f46c.nc /cache/tmp/01feddb0-4b1a-4faf-bf4d-e1dbc3e4f46c-adaptor.mars.internal-1722515680.535411-2073-2-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1959_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:31:41 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1959, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:31:26 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data8/adaptor.mars.internal-1722515485.6294625-22941-11-869e3955-9a6a-4b1b-92aa-babd075be6ab.nc /cache/tmp/869e3955-9a6a-4b1b-92aa-babd075be6ab-adaptor.mars.internal-1722515473.3264084-22941-5-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1979_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1955_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1966_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1955_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:33:54 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1955, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:33:01 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data8/adaptor.mars.internal-1722515580.9079025-11532-9-84e74d10-65a6-441f-926c-61ad1b3513e2.nc /cache/tmp/84e74d10-65a6-441f-926c-61ad1b3513e2-adaptor.mars.internal-1722515577.1396642-11532-7-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1958_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1974_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:33:58 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1974, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:33:13 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data2/adaptor.mars.internal-1722515593.1583354-6643-13-4502067a-0c1e-4192-97ea-dcc2b5f971d4.nc /cache/tmp/4502067a-0c1e-4192-97ea-dcc2b5f971d4-adaptor.mars.internal-1722515589.5251894-6643-7-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1960_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:35:22 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1960, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:34:28 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data8/adaptor.mars.internal-1722515668.0925276-21403-18-1d78a56d-51ed-424f-b045-bca79500bf8e.nc /cache/tmp/1d78a56d-51ed-424f-b045-bca79500bf8e-adaptor.mars.internal-1722515664.7373724-21403-13-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1974_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1975_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1978_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:35:25 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1978, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:34:24 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data4/adaptor.mars.internal-1722515663.579233-26948-17-f817416a-07cf-4f4c-9ad0-741d6b6e9b46.nc /cache/tmp/f817416a-07cf-4f4c-9ad0-741d6b6e9b46-adaptor.mars.internal-1722515660.8718123-26948-9-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1957_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1976_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:31:53 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1976, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:31:34 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data8/adaptor.mars.internal-1722515493.7363746-18935-1-0b92f6cf-89bf-44d6-b170-35656599f6bf.nc /cache/tmp/0b92f6cf-89bf-44d6-b170-35656599f6bf-adaptor.mars.internal-1722515486.6829734-18935-1-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1968_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:32:56 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1968, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:32:36 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data6/adaptor.mars.internal-1722515556.6059022-21453-3-73d569e7-c65d-4b31-87bc-0881d2132edb.nc /cache/tmp/73d569e7-c65d-4b31-87bc-0881d2132edb-adaptor.mars.internal-1722515549.9708703-21453-2-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:entity prov:id="recipe:recipe_obs_historical_tas_tos_pr.yml">
+    <attribute:description>The recipe regrids the data to a 5x5 grid and provides the climatological average and standard deviations for the entire historical period as well as for four shorter periods within that period.</attribute:description>
+    <attribute:references>[]</attribute:references>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1964_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1961_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1975_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:35:22 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1975, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:34:16 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data8/adaptor.mars.internal-1722515655.9673789-21664-8-ea6b5028-d6b9-4fa1-bdae-350342415e87.nc /cache/tmp/ea6b5028-d6b9-4fa1-bdae-350342415e87-adaptor.mars.internal-1722515653.423268-21664-3-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1972_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:32:26 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1972, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:31:58 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data5/adaptor.mars.internal-1722515518.2092412-22888-7-9e0fa21b-2df8-4038-b964-8b191d71d28d.nc /cache/tmp/9e0fa21b-2df8-4038-b964-8b191d71d28d-adaptor.mars.internal-1722515514.8651989-22888-4-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1956_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1966_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:31:15 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1966, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:31:09 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data9/adaptor.mars.internal-1722515468.6402495-26613-9-f58ab87b-90e6-49b7-bde9-7eeab3b082e2.nc /cache/tmp/f58ab87b-90e6-49b7-bde9-7eeab3b082e2-adaptor.mars.internal-1722515464.581834-26613-5-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1979_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:33:59 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1979, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:33:44 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data9/adaptor.mars.internal-1722515624.0340693-3790-8-4097f415-e389-428a-80c3-29d9d55df92d.nc /cache/tmp/4097f415-e389-428a-80c3-29d9d55df92d-adaptor.mars.internal-1722515621.5227506-3790-5-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1965_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1977_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:35:22 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1977, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:34:08 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data2/adaptor.mars.internal-1722515647.8591318-22888-9-9dec5a80-4999-4d42-aeac-d089fdd87e8c.nc /cache/tmp/9dec5a80-4999-4d42-aeac-d089fdd87e8c-adaptor.mars.internal-1722515641.3429294-22888-5-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1977_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1976_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1972_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1967_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:activity prov:id="task:historical1/pr_std_mon"/>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1958_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:35:22 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1958, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:34:00 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data0/adaptor.mars.internal-1722515640.2186198-24998-1-9c76cc71-04f4-4f84-9c06-70b7669fcd58.nc /cache/tmp/9c76cc71-04f4-4f84-9c06-70b7669fcd58-adaptor.mars.internal-1722515634.7171702-24998-1-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1970_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1962_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc">
+    <attribute:activity>CMIP</attribute:activity>
+    <attribute:alias>ERA5</attribute:alias>
+    <attribute:dataset>ERA5</attribute:dataset>
+    <attribute:diagnostic>historical1</attribute:diagnostic>
+    <attribute:end_year>1980</attribute:end_year>
+    <attribute:exp>historical</attribute:exp>
+    <attribute:filename>/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc</attribute:filename>
+    <attribute:frequency>mon</attribute:frequency>
+    <attribute:long_name>Precipitation</attribute:long_name>
+    <attribute:mip>Amon</attribute:mip>
+    <attribute:modeling_realm>['atmos']</attribute:modeling_realm>
+    <attribute:original_short_name>pr</attribute:original_short_name>
+    <attribute:preprocessor>standard_dev_monthly</attribute:preprocessor>
+    <attribute:project>native6</attribute:project>
+    <attribute:recipe_dataset_index>0</attribute:recipe_dataset_index>
+    <attribute:short_name>pr</attribute:short_name>
+    <attribute:standard_name>precipitation_flux</attribute:standard_name>
+    <attribute:start_year>1951</attribute:start_year>
+    <attribute:tier>3</attribute:tier>
+    <attribute:timerange>1951/1980</attribute:timerange>
+    <attribute:type>reanaly</attribute:type>
+    <attribute:units>kg m-2 s-1</attribute:units>
+    <attribute:variable_group>pr_std_mon</attribute:variable_group>
+    <attribute:variable_long_name>Precipitation</attribute:variable_long_name>
+    <attribute:version>v1</attribute:version>
+    <preprocessor:climate_statistics>{'operator': 'std_dev', 'period': 'monthly'}</preprocessor:climate_statistics>
+    <preprocessor:regrid>{'target_grid': '5x5', 'scheme': 'linear'}</preprocessor:regrid>
+    <preprocessor:remove_supplementary_variables>{}</preprocessor:remove_supplementary_variables>
+    <preprocessor:save>{'compress': False, 'filename': PosixPath('/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc')}</preprocessor:save>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1971_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1964_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:32:57 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1964, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:32:25 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data0/adaptor.mars.internal-1722515545.2933497-13400-6-fa0ca4d8-da0e-45e5-a82f-5bfbb86a8eb2.nc /cache/tmp/fa0ca4d8-da0e-45e5-a82f-5bfbb86a8eb2-adaptor.mars.internal-1722515542.9780533-13400-2-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1973_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:33:54 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1973, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:32:56 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data7/adaptor.mars.internal-1722515576.0496747-26613-12-a5ab2d6d-fdf7-4e7c-b3e9-b7f3ab18807a.nc /cache/tmp/a5ab2d6d-fdf7-4e7c-b3e9-b7f3ab18807a-adaptor.mars.internal-1722515573.5129085-26613-7-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1967_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:35:22 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1967, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:34:58 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data0/adaptor.mars.internal-1722515698.519915-15185-19-7d2098d6-a308-4383-93c2-b8989fc849d1.nc /cache/tmp/7d2098d6-a308-4383-93c2-b8989fc849d1-adaptor.mars.internal-1722515695.2870896-15185-12-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1969_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:32:17 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1969, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:32:02 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data3/adaptor.mars.internal-1722515521.7095287-12007-6-83969920-dc6e-4758-8cdc-224831d47e58.nc /cache/tmp/83969920-dc6e-4758-8cdc-224831d47e58-adaptor.mars.internal-1722515519.2341368-12007-5-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1954_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1951_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:wasAttributedTo>
+    <prov:entity prov:ref="recipe:recipe_obs_historical_tas_tos_pr.yml"/>
+    <prov:agent prov:ref="author:Grusdt, Britta"/>
+  </prov:wasAttributedTo>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1952_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1970_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:32:56 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1970, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:32:22 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data4/adaptor.mars.internal-1722515541.9517438-21112-15-cd650d10-854d-46f3-8a2f-548ab45c2eb2.nc /cache/tmp/cd650d10-854d-46f3-8a2f-548ab45c2eb2-adaptor.mars.internal-1722515539.6569285-21112-6-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1963_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1962_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:35:23 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1962, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:34:39 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data6/adaptor.mars.internal-1722515679.522183-26700-4-db89b421-6ed1-4b4f-a6ef-c452049cd4d1.nc /cache/tmp/db89b421-6ed1-4b4f-a6ef-c452049cd4d1-adaptor.mars.internal-1722515669.1261244-26700-2-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1954_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:33:54 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1954, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:33:18 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data0/adaptor.mars.internal-1722515598.3730888-15248-8-faa66bd5-df75-4c1f-b6d4-b4e05f05e990.nc /cache/tmp/faa66bd5-df75-4c1f-b6d4-b4e05f05e990-adaptor.mars.internal-1722515594.2591527-15248-4-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1956_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:35:21 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1956, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:34:20 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data8/adaptor.mars.internal-1722515659.8953955-28231-8-e674a5da-052c-4f9d-8b5c-48799f0efe7b.nc /cache/tmp/e674a5da-052c-4f9d-8b5c-48799f0efe7b-adaptor.mars.internal-1722515656.9762683-28231-4-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1957_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:32:57 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1957, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:32:29 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data1/adaptor.mars.internal-1722515548.9269998-26431-13-2414203c-2c0d-4523-89de-1e60fe4fadaf.nc /cache/tmp/2414203c-2c0d-4523-89de-1e60fe4fadaf-adaptor.mars.internal-1722515546.3858101-26431-10-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1971_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:33:54 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1971, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:33:35 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data2/adaptor.mars.internal-1722515615.5086172-26660-17-4afb27a2-1b2e-4d00-96ed-b06810d02865.nc /cache/tmp/4afb27a2-1b2e-4d00-96ed-b06810d02865-adaptor.mars.internal-1722515608.7306254-26660-11-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:activity prov:id="software:esmvaltool==2.11.1"/>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1951_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:33:54 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1951, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:33:07 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data0/adaptor.mars.internal-1722515587.504533-16539-7-5da3ab4b-fa65-4e2a-8ac2-7e3c6a7a491a.nc /cache/tmp/5da3ab4b-fa65-4e2a-8ac2-7e3c6a7a491a-adaptor.mars.internal-1722515582.0144799-16539-3-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1952_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-08-01 12:33:10 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1952, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-08-01 12:32:52 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data3/adaptor.mars.internal-1722515572.456156-959-1-b5e1390d-ed38-41d7-a073-ad1a6d0a31e5.nc /cache/tmp/b5e1390d-ed38-41d7-a073-ad1a6d0a31e5-adaptor.mars.internal-1722515565.1554224-959-1-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:agent prov:id="author:Grusdt, Britta">
+    <attribute:institute>AWI, Germany</attribute:institute>
+  </prov:agent>
+  <prov:wasStartedBy>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+    <prov:trigger prov:ref="recipe:recipe_obs_historical_tas_tos_pr.yml"/>
+    <prov:starter prov:ref="software:esmvaltool==2.11.1"/>
+  </prov:wasStartedBy>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1978_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1968_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+  <prov:entity prov:id="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1980_monthly.nc">
+    <attribute:Conventions>CF-1.6</attribute:Conventions>
+    <attribute:history>2024-06-11 09:48:51 UTC by era5cli 1.4.2: reanalysis-era5-single-levels-monthly-means {'variable': 'total_precipitation', 'year': 1980, 'month': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], 'time': ['00:00'], 'format': 'netcdf', 'product_type': 'monthly_averaged_reanalysis'}
+2024-06-11 09:48:25 GMT by grib_to_netcdf-2.28.1: /opt/ecmwf/mars-client/bin/grib_to_netcdf -S param -o /cache/data4/adaptor.mars.internal-1718099304.703014-18263-2-ca3eff2c-09d8-4d7f-ad62-b45be39dbab4.nc /cache/tmp/ca3eff2c-09d8-4d7f-ad62-b45be39dbab4-adaptor.mars.internal-1718099300.0332742-18263-1-tmp.grib</attribute:history>
+  </prov:entity>
+  <prov:wasDerivedFrom>
+    <prov:generatedEntity prov:ref="file:/albedo/work/projects/p_forclima/preproc_data_esmvaltool/historical/recipe_obs_historical_tas_tos_pr_20250204_095902/preproc/historical1/pr_std_mon/native6_ERA5_reanaly_v1_Amon_pr_1951-1980.nc"/>
+    <prov:usedEntity prov:ref="file:/albedo/work/projects/p_pool_clim_data/OBS/Tier3/ERA5/v1/mon/pr/era5_total_precipitation_1980_monthly.nc"/>
+    <prov:activity prov:ref="task:historical1/pr_std_mon"/>
+  </prov:wasDerivedFrom>
+</prov:document>
