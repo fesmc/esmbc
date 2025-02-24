@@ -950,6 +950,9 @@ contains
         call nc_dims(vs%par%filename,vs%par%name,dim_names,vs%dim)
         vs%par%ndim = size(vs%dim,1)
 
+! == TO DO ==
+
+! Handle dimensions from multiple files!!
 
 
 ! ======== TO DO =============
@@ -1224,12 +1227,6 @@ contains
         ! See if multiple files are available
         call get_matching_files(par%filenames, par%filename)
         
-        write(*,*) "filenames: "
-        do i = 1, size(par%filenames,1)
-            write(*,*) trim(par%filenames(i))
-        end do
-        stop 
-
         ! Make sure time parameters are consistent time_par=[x0,x1,dx]
         if (par%time_par(3) .eq. 0.0) par%time_par(2) = par%time_par(1) 
 
@@ -1243,6 +1240,12 @@ contains
         if (print_summary) then  
             write(*,*) "Loading: ", trim(filename), ":: ", trim(group)
             write(*,*) "filename      = ", trim(par%filename)
+            if (size(par%filenames,1) .gt. 1) then
+                write(*,*) "filenames     = "
+                do i = 1, size(par%filenames,1)
+                    write(*,*) "                  ", trim(par%filenames(i))
+                end do
+            end if
             write(*,*) "name          = ", trim(par%name)
             write(*,*) "units_in      = ", trim(par%units_in)
             write(*,*) "units_out     = ", trim(par%units_out)

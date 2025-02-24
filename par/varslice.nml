@@ -1,5 +1,5 @@
 &var1
-    filename    = "var_test_*.nc"
+    filename    = "var_test_195*.nc var_test_1960.nc"
     name        = "var1"
     units_in    = "K"
     units_out   = "K"
