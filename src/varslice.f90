@@ -1278,6 +1278,7 @@ contains
         real(wp) :: x1_now
         real(wp) :: dx_now
         integer  :: nx_now 
+        real(wp) :: nx_check
 
         dx_now = 1.0_wp 
         if (present(dx)) dx_now = dx 
@@ -1297,11 +1298,20 @@ contains
 
         if (allocated(x)) deallocate(x)
 
-        nx_now = ceiling( (x1_now-x0_now)/dx_now ) + 1
+        nx_now   = nint((x1_now-x0_now)/dx_now) + 1
+        nx_check = (x1_now-x0_now)/dx_now + 1
 
-        ! Case that x0 + nx*dx != x1
-
-
+        if ( abs(nx_now - nx_check) .gt. TOL ) then
+            ! Make sure nx is a round number.
+            write(error_unit,*) "axis_init:: Error: desired axis bounds [x0,x1] do &
+            & not divide evenly with dx."
+            write(error_unit,*) "  x0: ", x0_now
+            write(error_unit,*) "  x1: ", x1_now
+            write(error_unit,*) "  dx: ", dx_now
+            write(error_unit,*) "  nx: ", ((x1_now-x0_now)/dx_now + 1)
+            stop
+        end if
+        
         allocate(x(nx_now))
 
         do i = 1, nx_now 

@@ -17,7 +17,7 @@ program test
 
     ! Testing methods on one varslice variable ==============
 if (.TRUE.) then 
-    call make_test_file("var_test.nc")
+    call make_test_file("var_test.nc",t0=1950.0_wp,dt=1.0_wp/12.0_wp,nt=11*12)
     call varslice_init_nml(v1,"par/varslice.nml",group="var1")
     
     call varslice_update(v1, [1945.15_wp],method="interp",rep=1, print_summary=.TRUE.)
@@ -103,14 +103,17 @@ end if
 
 contains
 
-    subroutine make_test_file(filename)
+    subroutine make_test_file(filename,t0,dt,nt)
 
         implicit none 
 
-        character(len=*), intent(IN) :: filename 
-
+        character(len=*),   intent(IN) :: filename 
+        real(wp),           intent(IN) :: t0
+        real(wp),           intent(IN) :: dt
+        integer,            intent(IN) :: nt
+        
         ! Local variables
-        integer :: k, nt  
+        integer :: k  
         real(wp), allocatable :: var(:,:,:) 
 
         ! Create the netcdf file 
@@ -122,13 +125,12 @@ contains
         call nc_write_dim(filename,"yc",x=[2,4,6],units="1")
         
         ! Add time axis with current value 
-        call nc_write_dim(filename,"time", x=1950.0_wp+1.0_wp/24.0_wp,dx=1.0_wp/12.0_wp,nx=11*12,units="years",unlimited=.TRUE.)
+        call nc_write_dim(filename,"time", x=t0+dt/2.0_wp,dx=dt,nx=nt,units="years",unlimited=.TRUE.)
         
-        nt = 11*12
         allocate(var(3,3,nt))
 
         do k = 1, nt 
-            var(:,:,k) = 1950.0 + 1.0_wp/24.0_wp + real(k-1,wp)*1.0_wp/12.0_wp
+            var(:,:,k) = t0 + dt/2.0_wp + real(k-1,wp)*dt
         end do 
 
         call nc_write(filename,"var1",var,dim1="xc",dim2="yc",dim3="time")
