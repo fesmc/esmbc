@@ -15,8 +15,10 @@ program test
     real(wp) :: time_init, time_end, time, dt
     integer  :: n, k
 
+    
+if (.FALSE.) then
     ! Testing methods on one varslice variable ==============
-if (.TRUE.) then 
+
     call make_test_file("var_test.nc",t0=1950.0_wp,dt=1.0_wp/12.0_wp,nt=11*12)
     
     
@@ -37,7 +39,19 @@ if (.TRUE.) then
     call varslice_update(v1, [1959.0_wp], method="exact",rep=12,print_summary=.TRUE.)
     
     stop 
-end if 
+end if
+
+
+if (.TRUE.) then
+    ! Testing methods on one varslice variable in multiple yearly files ==============
+
+    call make_test_files("var_test_*.nc",t0=1950.0_wp,dt=1.0_wp/12.0_wp,nt=11*12)
+    
+    call varslice_init_nml(v1,"par/varslice.nml",group="var1")
+    
+end if
+
+
     ! =======================================================
 
 
@@ -143,6 +157,68 @@ contains
 
     end subroutine make_test_file
 
+    subroutine make_test_files(filename,t0,dt,nt)
+
+        implicit none 
+
+        character(len=*),   intent(IN) :: filename 
+        real(wp),           intent(IN) :: t0
+        real(wp),           intent(IN) :: dt
+        integer,            intent(IN) :: nt
+        
+        ! Local variables
+        character(len=1024) :: filename_now
+        integer :: i, n_files
+        character(len=4) :: yr_str
+        real(wp) :: t 
+
+        n_files = int(nt*dt)
+
+        do i = 1, n_files
+            t = t0+(i-1)
+            write(yr_str,"(i4)") int(t)
+            call replace_substring(filename_now, filename, "*", yr_str)
+            call make_test_file(filename_now,t,dt,nt=int(1.0/dt))
+        end do
+
+        return
+
+    end subroutine make_test_files
+
+    subroutine replace_substring(output_str, input_str, old_sub, new_sub)
+        
+        implicit none
+        
+        character(len=*), intent(OUT) :: output_str  ! Modified string
+        character(len=*), intent(IN)  :: input_str   ! Original string
+        character(len=*), intent(IN)  :: old_sub     ! Substring to replace
+        character(len=*), intent(IN)  :: new_sub     ! Substring to replace with
+        
+        ! Local variables
+        character(len=255) :: temp_str
+        integer :: pos, old_len, new_len, input_len
+
+        ! Initialize output_str to input_str initially
+        output_str = input_str
+        old_len = len(old_sub)
+        new_len = len(new_sub)
+        input_len = len(input_str)
+
+        ! Loop to replace all occurrences of old_sub with new_sub
+        do
+            pos = index(output_str, old_sub)
+            if (pos == 0) exit  ! No more occurrences found
+
+            ! Perform replacement
+            temp_str = output_str(1:pos-1) // new_sub // output_str(pos+old_len:)
+
+            ! Update output_str with the modified string
+            output_str = temp_str
+        end do
+
+        return
+
+    end subroutine replace_substring
 
     subroutine write_step(filename,var,time,init)
 

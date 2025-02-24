@@ -14,6 +14,7 @@ module varslice
     type varslice_param_class
 
         character(len=1024) :: filename
+        character(len=1024), allocatable :: filenames(:)
         character(len=56)   :: name 
         character(len=56)   :: units_in
         character(len=56)   :: units_out
@@ -1199,6 +1200,7 @@ contains
         ! Local variables
         logical  :: init_pars
         logical  :: print_summary 
+        integer  :: i 
 
         init_pars = .FALSE.
 
@@ -1218,6 +1220,15 @@ contains
         if (present(domain) .and. present(grid_name)) then
             call parse_path(par%filename,domain,grid_name)
         end if 
+
+        ! See if multiple files are available
+        call get_matching_files(par%filenames, par%filename)
+        
+        write(*,*) "filenames: "
+        do i = 1, size(par%filenames,1)
+            write(*,*) trim(par%filenames(i))
+        end do
+        stop 
 
         ! Make sure time parameters are consistent time_par=[x0,x1,dx]
         if (par%time_par(3) .eq. 0.0) par%time_par(2) = par%time_par(1) 
@@ -1351,5 +1362,64 @@ contains
         return 
 
     end subroutine print_var_range
+
+    subroutine get_matching_files(filenames, pattern)
+
+        implicit none
+
+        character(len=*), allocatable, intent(OUT) :: filenames(:)
+        character(len=*), intent(in) :: pattern
+        
+        ! Local variables
+        character(len=1024) :: command
+        character(len=256) :: temp_filename
+        integer :: i, ios, unit
+        integer :: num_files
+
+        integer, parameter :: max_num_files_allowed = 10000
+
+        ! Temporary file to store file names
+        temp_filename = "filelist.tmp"
+
+        ! Create command to list files sorted alphabetically
+        command = "ls -1 " // trim(pattern) // " | sort > " // trim(temp_filename)
+        call execute_command_line(trim(command))
+
+        ! Open the temporary file
+        open(newunit=unit, file=trim(temp_filename), status="old", action="read", iostat=ios)
+        
+        ! Make sure at least one file was found
+        if (ios /= 0) then
+            write(error_unit,*) "get_matching_files:: Error: No matching files found."
+            write(error_unit,*) "pattern = ", trim(pattern)
+            stop
+        end if
+
+        ! First, count the number of files
+        num_files = 0
+        
+        do i = 1, max_num_files_allowed
+            read(unit, '(a)', iostat=ios)
+            if (ios /= 0) exit
+            num_files = num_files + 1
+        end do
+        rewind(unit)
+
+        ! Allocate the output array
+        if (allocated(filenames)) deallocate(filenames)
+        allocate(filenames(num_files))
+
+        ! Read the filenames into the array
+        do i = 1, num_files
+            read(unit, '(a)', iostat=ios) filenames(i)
+        end do
+        close(unit)
+
+        ! Remove the temporary file
+        call execute_command_line("rm " // trim(temp_filename))
+
+        return
+
+    end subroutine get_matching_files
 
 end module varslice
