@@ -306,16 +306,8 @@ contains
                         ! write(*,*) "      ", vs%time(k0), vs%time(k1)
                     end if
                         
-
+                    ! Make sure var variable is deallocated and ready to be modified
                     if (allocated(var)) deallocate(var) 
-
-
-
-
-                    ! TO DO: read from multiple files as needed...
-            
-
-
 
                     select case(par%ndim)
 
