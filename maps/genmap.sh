@@ -1,9 +1,15 @@
 domain=Antarctica
-grid_name_src=ERA5
+
 grid_name_tgt=ANT-32KM
+
+#grid_name_src=ANT-16KM
 #nc_src=../ice_data/${domain}/${grid_name_src}/${grid_name_src}_REGIONS.nc 
-#nc_src=../data/era5-processed-esmvaltool-historical1/tas_CLIM_mon/native6_ERA5_reanaly_v1_Amon_tas_1951-1980.nc
-nc_src=../data/era5/tas/era5_2m_temperature_1950_monthly.nc
+
+#grid_name_src=ERA5
+#nc_src=../data/era5/tas/era5_2m_temperature_1950_monthly.nc
+
+grid_name_src=RACMO-ANT-27KM
+nc_src=../data/RACMO2.3p2/ANT-27KM/t2m_monthlyA_ANT27_ERA5-3H_RACMO2.3p2_197901_202212.nc
 
 cdo gencon,grid_${grid_name_tgt}.txt -setgrid,grid_${grid_name_src}.txt ${nc_src} scrip-con_${grid_name_src}_${grid_name_tgt}.nc
 

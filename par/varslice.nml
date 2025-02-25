@@ -1,6 +1,6 @@
 &var1
     filename    = "var_test.nc"
-    name        = "var2"
+    name        = "var1"
     units_in    = "K"
     units_out   = "K"
     unit_scale  = 1.0 

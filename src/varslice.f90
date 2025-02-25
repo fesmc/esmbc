@@ -437,19 +437,9 @@ contains
                             ! Allocate vs%var to the same size as var 
                             ! and store all values 
 
-                            if (size(vs%var,1) .eq. size(var,1) .and. &
-                                size(vs%var,2) .eq. size(var,2) .and. &
-                                size(vs%var,3) .eq. size(var,3) .and. &
-                                size(vs%var,4) .eq. size(var,4) ) then 
-
-                                ! No allocation needed size is the same 
-
-                            else 
-
-                                deallocate(vs%var)
-                                allocate(vs%var(size(vs%var,1),size(vs%var,2),size(vs%var,3),size(vs%var,4)))
-
-                            end if 
+                            
+                            if (allocated(vs%var)) deallocate(vs%var)
+                            allocate(vs%var(size(var,1),size(var,2),size(var,3),size(var,4)))
 
                             ! Store data in vs%var 
                             vs%var = var 
@@ -1439,9 +1429,9 @@ contains
         end if 
 
         if (present(time)) then 
-            write(*,"(f10.1,2x,a10,a3,2f14.3)") time, trim(name), ": ", vmin, vmax
+            write(*,"(f10.1,2x,a16,a3,2f14.3)") time, trim(name), ": ", vmin, vmax
         else 
-            write(*,"(10x,2x,a10,a3,2f14.3)") trim(name), ": ", vmin, vmax
+            write(*,"(10x,2x,a16,a3,2f14.3)") trim(name), ": ", vmin, vmax
         end if 
 
         return 
@@ -1535,7 +1525,7 @@ contains
 
         ! Local variables
         integer :: i, k0, nk, j0, nj, t0, nt, num_files
-        integer :: ndim
+        integer :: ndim, nj_max
         integer, allocatable :: nt_files(:)
         integer, allocatable :: dims(:)
         character(len=1024) :: filename
@@ -1571,10 +1561,12 @@ contains
         nt = 0
         do i = 1, num_files
             nk = nk + nt_files(i)       ! count maximum available including this file
-            nk = min(nk,count(ndim))       ! Limit maximum to total count in case it is less
-            if (k0 .le. nk) then
+            !nk = min(nk,count(ndim))       ! Limit maximum to total count in case it is less
+            !write(*,*) "k0: ", k0, nk
+            if (k0 .le. nk) then 
                 j0 = k0 - j0            ! start index for current file
                 nj = nk - k0 + 1        ! count total from current file
+                nj = min(nj,count(ndim))
                 nt = nt + nj            ! store total to be loaded so far
                 t0 = nt - nj + 1        ! start index in output array
                 !write(*,*) "j: ", j0, nj, k0, nk, t0, nt
@@ -1607,6 +1599,7 @@ contains
             &do not much the expected total."
             write(error_unit,*) "count: ", count
             write(error_unit,*) "nk: ", nk
+            write(error_unit,*) "nt: ", nt
             stop
         end if
 

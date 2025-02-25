@@ -13,11 +13,15 @@ program test
     type(ismip6_forcing_class) :: ismp 
     type(varslice_class)       :: v1
     type(varslice_class)       :: vmp1
-    type(map_scrip_class)      :: mps
+    type(varslice_class)       :: vmp2
+    type(map_scrip_class)      :: mps1
+    type(map_scrip_class)      :: mps2
 
     real(wp) :: time_init, time_end, time, dt
     integer  :: n, k
 
+    real(dp) :: time0, time1
+    integer  :: n_iter
     
 if (.FALSE.) then
     ! Testing methods on one varslice variable ==============
@@ -44,7 +48,7 @@ if (.FALSE.) then
 end if
 
 
-if (.FALSE.) then
+if (.TRUE.) then
     ! Testing methods on one varslice variable in multiple yearly files ==============
 
     call make_test_file("var_test.nc",t0=1950.0_wp,dt=1.0_wp/12.0_wp,nt=11*12)
@@ -53,27 +57,48 @@ if (.FALSE.) then
     !call varslice_init_nml(v1,"par/varslice.nml",group="var1")  ! One file
     call varslice_init_nml(v1,"par/varslice.nml",group="var2")   ! Multiple files
 
-    call varslice_update(v1, [1950.0_wp,1960.0_wp],method="range_mean",rep=12,print_summary=.TRUE.)
+    call varslice_update(v1, [1952.0_wp,1958.0_wp],method="range_mean",rep=12,print_summary=.TRUE.)
     
 end if
 
 
-if (.TRUE.) then
+if (.FALSE.) then
     ! Testing remapping of ERA5 data
 
     call varslice_init_nml(v1,"par/varslice.nml",group="tas_clim_mon")
 
-    ! Initialize a map
-    call map_scrip_init(mps,"ERA5","ANT-32KM",method="con",fldr="maps",load=.TRUE.)
+    ! Initialize map(s)
+    call map_scrip_init(mps1,"ERA5","ANT-32KM",method="con",fldr="maps",load=.TRUE.)
+    call map_scrip_init(mps2,"ERA5","ANT-32KM",method="con",fldr="maps",load=.TRUE.)
 
-    ! Update data
-    call varslice_update(v1, [1950.0_wp,1954.0_wp],method="range_mean",rep=12,print_summary=.TRUE.)
-    
-    ! Map to target grid
-    call varslice_map_to_grid(vmp1,v1,mps,method="mean",missing_value=mv)
-    call print_var_range(v1%var,"original",missing_value=mv)
-    call print_var_range(vmp1%var,"mapped",missing_value=mv)
-    
+
+    ! === E.G., WITHIN A TIME LOOP BELOW ===
+
+    call cpu_time(time0)
+
+    n_iter = 5
+
+    do n = 1, n_iter
+        ! Update data
+        !call varslice_update(v1, [1950.0_wp,1954.0_wp],method="range_mean",rep=12,print_summary=.TRUE.)
+        call varslice_update(v1, [1950.0_wp+(n-1)],method="exact",rep=12,print_summary=.TRUE.)
+        
+        ! Map to target grid(s)
+        call varslice_map_to_grid(vmp1,v1,mps1,method="mean",missing_value=mv)
+        call varslice_map_to_grid(vmp2,v1,mps2,method="mean",missing_value=mv)
+
+        write(*,*) "Iteration: ", n
+        call print_var_range(v1%var,  "  original data",missing_value=mv)
+        call print_var_range(vmp1%var,"   - mapped v1 ",missing_value=mv)
+        call print_var_range(vmp2%var,"   - mapped v2 ",missing_value=mv)
+    end do
+
+    call cpu_time(time1)
+
+    write(*,*) (time1-time0), "sec for ", n_iter, "iterations."
+    write(*,*) (time1-time0)/real(n_iter), "sec per iteration."
+    ! ========
+
 end if
 
 
