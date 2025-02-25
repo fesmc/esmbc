@@ -48,7 +48,7 @@ if (.FALSE.) then
 end if
 
 
-if (.TRUE.) then
+if (.FALSE.) then
     ! Testing methods on one varslice variable in multiple yearly files ==============
 
     call make_test_file("var_test.nc",t0=1950.0_wp,dt=1.0_wp/12.0_wp,nt=11*12)
@@ -62,15 +62,14 @@ if (.TRUE.) then
 end if
 
 
-if (.FALSE.) then
+if (.TRUE.) then
     ! Testing remapping of ERA5 data
 
     call varslice_init_nml(v1,"par/varslice.nml",group="tas_clim_mon")
 
     ! Initialize map(s)
     call map_scrip_init(mps1,"ERA5","ANT-32KM",method="con",fldr="maps",load=.TRUE.)
-    call map_scrip_init(mps2,"ERA5","ANT-32KM",method="con",fldr="maps",load=.TRUE.)
-
+    call map_scrip_init(mps2,"ERA5","GRL-16KM",method="con",fldr="maps",load=.TRUE.)
 
     ! === E.G., WITHIN A TIME LOOP BELOW ===
 
@@ -86,6 +85,12 @@ if (.FALSE.) then
         ! Map to target grid(s)
         call varslice_map_to_grid(vmp1,v1,mps1,method="mean",missing_value=mv)
         call varslice_map_to_grid(vmp2,v1,mps2,method="mean",missing_value=mv)
+
+        ! TO DO
+
+        ! Extrapolation and further data manipulation
+
+
 
         write(*,*) "Iteration: ", n
         call print_var_range(v1%var,  "  original data",missing_value=mv)
