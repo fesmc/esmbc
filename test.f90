@@ -5,12 +5,14 @@ program test
 
     use ismip6
     use varslice 
+    use mapping_scrip
 
     implicit none 
 
     type(ismip6_experiment_class) :: iexp 
     type(ismip6_forcing_class) :: ismp 
     type(varslice_class)       :: v1 
+    type(map_scrip_class)      :: mps
 
     real(wp) :: time_init, time_end, time, dt
     integer  :: n, k
@@ -20,7 +22,6 @@ if (.FALSE.) then
     ! Testing methods on one varslice variable ==============
 
     call make_test_file("var_test.nc",t0=1950.0_wp,dt=1.0_wp/12.0_wp,nt=11*12)
-    
     
     call varslice_init_nml(v1,"par/varslice.nml",group="var1")
     
@@ -42,16 +43,27 @@ if (.FALSE.) then
 end if
 
 
-if (.TRUE.) then
+if (.FALSE.) then
     ! Testing methods on one varslice variable in multiple yearly files ==============
 
     call make_test_file("var_test.nc",t0=1950.0_wp,dt=1.0_wp/12.0_wp,nt=11*12)
     call make_test_files("var_test_*.nc",t0=1950.0_wp,dt=1.0_wp/12.0_wp,nt=11*12)
     
-    call varslice_init_nml(v1,"par/varslice.nml",group="var1")
-    
+    !call varslice_init_nml(v1,"par/varslice.nml",group="var1")  ! One file
+    call varslice_init_nml(v1,"par/varslice.nml",group="var2")   ! Multiple files
+
     call varslice_update(v1, [1950.0_wp,1960.0_wp],method="range_mean",rep=12,print_summary=.TRUE.)
     
+end if
+
+
+if (.TRUE.) then
+    ! Testing remapping of ERA5 data
+
+    call varslice_init_nml(v1,"par/varslice.nml",group="tas_clim_mon")
+
+    ! Initialize a map
+    !call map_scrip_init(mps,grid_name_src,grid_name_tgt,method,fldr,load,clean)
 end if
 
 
