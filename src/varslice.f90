@@ -60,31 +60,78 @@ module varslice
     public :: varslice_init_data
     public :: varslice_end 
 
+    public :: varslice_map_to_grid
+    
     public :: print_var_range
     
 contains
 
-    subroutine varslice_map_to_grid(vs_tgt,vs_src,mps)
+    subroutine varslice_map_to_grid(vs_tgt,vs_src,mps,mask_out,method,reset,missing_value, &
+                                    mask_pack,fill_method,filt_method,filt_par,verbose)
+        ! Given a input vs object on a source grid src,
+        ! map the variable to a target grid tgt and store
+        ! in new vs object.
 
         implicit none
 
         type(varslice_class),  intent(INOUT) :: vs_tgt
         type(varslice_class),  intent(IN)    :: vs_src
         type(map_scrip_class), intent(IN)    :: mps
-
+        integer,                intent(OUT), optional :: mask_out(:,:)   ! Mask showing where interpolation was done
+        character(len=*),       intent(IN),  optional :: method
+        logical,                intent(IN),  optional :: reset           ! Reset var_tgt initially to missing_value?
+        real(wp),               intent(IN),  optional :: missing_value   ! Points not included in mapping
+        logical,                intent(IN),  optional :: mask_pack(:,:)  ! Mask for where to interpolate
+        character(len=*),       intent(IN),  optional :: fill_method     ! Method to fill in remaining missing values
+        character(len=*),       intent(IN),  optional :: filt_method     ! Method to use for filtering
+        real(wp),               intent(IN),  optional :: filt_par(:)     ! gaussian=[sigma,dx]; poisson=[tol]
+        logical,                intent(IN),  optional :: verbose         ! Print information
+        
         ! Local variables
-        integer :: nx, ny 
+        integer :: nx, ny, nz, nt
+        integer :: i, j, k, t
+        integer :: ndim 
 
+        ! Consistency check: is this at least a 2D field?
+        ndim = size(vs_src%dim,1)
 
-        ! Determine size of target grid
+        if (ndim .lt. 2 .or. (vs_src%par%with_time .and. ndim .lt. 3)) then
+            write(error_unit,*) "varslice_map_to_grid:: Error: mapping can only be done &
+            &for fields with two spatial dimensions."
+            write(error_unit,*) "name = ", trim(vs_src%par%name)
+            write(error_unit,*) "ndim = ", ndim
+            write(error_unit,*) "dim  = ", vs_src%dim
+            stop
+        end if
+
+        ! Determine size of target var
         nx = mps%dst_grid_dims(1)
         ny = mps%dst_grid_dims(2)
+        nz = size(vs_src%var,3)         ! z should keep the same dimension
+        nt = size(vs_src%var,4)         ! time should keep the same dimension
+        
+        ! Initialize meta information by copying entire vs object
+        vs_tgt = vs_src
 
-        ! Initialize meta information
-        vs_tgt%par = vs_src%par
+        ! Re-allocate target varslice object fields as needed
+        deallocate(vs_tgt%x)
+        deallocate(vs_tgt%y)
+        deallocate(vs_tgt%var)
+        
+        allocate(vs_tgt%x(nx))
+        allocate(vs_tgt%y(ny))
+        allocate(vs_tgt%var(nx,ny,nz,nt))
 
-        ! Re-allocate target varslice object
 
+        ! Loop over dimensions and remap variable
+        do t = 1, nt
+        do k = 1, nz
+            call map_scrip_field(mps,trim(vs_tgt%par%name),vs_src%var(:,:,k,t),vs_tgt%var(:,:,k,t), &
+                            mask_out,method,reset,mv,mask_pack,fill_method,filt_method,filt_par,verbose)
+        end do
+        end do
+
+        ! Done! target field should now be available.
 
         return
 
