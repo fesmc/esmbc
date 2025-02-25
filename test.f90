@@ -45,11 +45,12 @@ end if
 if (.TRUE.) then
     ! Testing methods on one varslice variable in multiple yearly files ==============
 
+    call make_test_file("var_test.nc",t0=1950.0_wp,dt=1.0_wp/12.0_wp,nt=11*12)
     call make_test_files("var_test_*.nc",t0=1950.0_wp,dt=1.0_wp/12.0_wp,nt=11*12)
     
     call varslice_init_nml(v1,"par/varslice.nml",group="var1")
     
-    call varslice_update(v1, [1950.0_wp,1960.0_wp],method="range_mean",rep=12,print_summary=.TRUE.)
+    call varslice_update(v1, [1950.0_wp,1954.0_wp],method="range_mean",rep=12,print_summary=.TRUE.)
     
 end if
 

@@ -342,13 +342,14 @@ contains
                             ! Allocate local var to the right size 
                             allocate(var(vs%dim(1),vs%dim(2),nt_tot,1))
 
-                            ! 2D variable plus time dimension 
-                            ! call nc_read(par%filename,par%name,var,missing_value=mv, &
-                            !         start=[1,1,k0],count=[vs%dim(1),vs%dim(2),nt_tot])
-
+                            ! 2D variable plus time dimension
+if (.FALSE.) then 
+                            call nc_read(par%filename,par%name,var,missing_value=mv, &
+                                    start=[1,1,k0],count=[vs%dim(1),vs%dim(2),nt_tot])
+else
                             call nc_read_multifile_3D(par%filenames,par%name,var,missing_value=mv, &
                                     start=[1,1,k0],count=[vs%dim(1),vs%dim(2),nt_tot])
-
+end if
                         case(4)
 
                             ! Allocate local var to the right size 
@@ -503,7 +504,7 @@ contains
                                 stop 
                             end if 
 
-                            deallocate(vs%var)
+                            if (allocated(vs%var)) deallocate(vs%var)
 
                             select case(par%ndim)
 
@@ -623,7 +624,7 @@ contains
         real(wp),           intent(IN), optional :: missing_value
 
         ! Local variables
-        integer :: i, k0, nk, j0, nj, nt, num_files
+        integer :: i, k0, nk, j0, nj, t0, nt, num_files
         integer, allocatable :: nt_files(:)
         integer, allocatable :: dims(:)
         character(len=1024) :: filename
@@ -638,9 +639,9 @@ contains
         end do
 
         ! Consistency check
-        if (sum(nt_files) .ne. count(size(count,1))) then
+        if (sum(nt_files) .lt. count(size(count,1))) then
             write(error_unit,*) "nc_read_multifile:: Error: number of time axis values read in &
-            &do not much the expected total."
+            &is not sufficient to cover count."
             write(error_unit,*) "count: ", count
             write(error_unit,*) "nt_files: ", sum(nt_files)
             do i = 1, num_files
@@ -653,20 +654,26 @@ contains
         k0 = start(size(start,1))
         nk = 0
         j0 = 0
+        nt = 0
         do i = 1, num_files
             nk = nk + nt_files(i)       ! count maximum available including this file
+            nk = min(nk,count(3))       ! Limit maximum to total count in case it is less
             if (k0 .le. nk) then
                 j0 = k0 - j0            ! start index for current file
                 nj = nk - k0 + 1        ! count total from current file
-                write(*,*) "j: ", j0, nj, k0, nk
-                call nc_read(filenames(i),name,var(:,:,k0:nk,1),missing_value=missing_value, &
+                nt = nt + nj            ! store total to be loaded so far
+                t0 = nt - nj + 1        ! start index in output array
+                !write(*,*) "j: ", j0, nj, k0, nk, t0, nt
+                call nc_read(filenames(i),name,var(:,:,t0:nt,1),missing_value=missing_value, &
                                         start=[start(1),start(2),j0],count=[count(1),count(2),nj])
                 k0 = k0 + nj            ! start index for whole dimension over all files
-                j0 = nk                 ! reset j0 index to end of current total
             end if
+            j0 = nk                 ! reset j0 index to end of current total
+
+            if (nt .ge. count(3)) exit
         end do
 
-        if (nk .ne. count(3)) then
+        if (nt .ne. count(3)) then
             write(error_unit,*) "nc_read_multifile:: Error: number of time axis values read in &
             &do not much the expected total."
             write(error_unit,*) "count: ", count
@@ -1129,14 +1136,14 @@ contains
 
             case(1)
                 if (with_time) then 
-                    allocate(vs%var(1,1,1,1))
+                    !allocate(vs%var(1,1,1,1))
                 else 
-                    allocate(vs%var(vs%dim(1),1,1,1))
+                    !allocate(vs%var(vs%dim(1),1,1,1))
                 end if 
             case(2)
                 if (with_time) then 
                     allocate(vs%x(vs%dim(1)))
-                    allocate(vs%var(vs%dim(1),1,1,1))
+                    !allocate(vs%var(vs%dim(1),1,1,1))
 
                     if (nc_exists_var(filename_dims,dim_names(1))) then 
                         call nc_read(filename_dims,dim_names(1),vs%x)
@@ -1146,7 +1153,7 @@ contains
                 else 
                     allocate(vs%x(vs%dim(1)))
                     allocate(vs%y(vs%dim(2)))
-                    allocate(vs%var(vs%dim(1),vs%dim(2),1,1))
+                    !allocate(vs%var(vs%dim(1),vs%dim(2),1,1))
 
                     if (nc_exists_var(filename_dims,dim_names(1))) then 
                         call nc_read(filename_dims,dim_names(1),vs%x)
@@ -1165,7 +1172,7 @@ contains
                 if (with_time) then
                     allocate(vs%x(vs%dim(1)))
                     allocate(vs%y(vs%dim(2)))
-                    allocate(vs%var(vs%dim(1),vs%dim(2),1,1))
+                    !allocate(vs%var(vs%dim(1),vs%dim(2),1,1))
 
                     if (nc_exists_var(filename_dims,dim_names(1))) then 
                         call nc_read(filename_dims,dim_names(1),vs%x)
@@ -1182,7 +1189,7 @@ contains
                     allocate(vs%x(vs%dim(1)))
                     allocate(vs%y(vs%dim(2)))
                     allocate(vs%z(vs%dim(3)))
-                    allocate(vs%var(vs%dim(1),vs%dim(2),vs%dim(3),1))
+                    !allocate(vs%var(vs%dim(1),vs%dim(2),vs%dim(3),1))
 
                     if (nc_exists_var(filename_dims,dim_names(1))) then 
                         call nc_read(filename_dims,dim_names(1),vs%x)
@@ -1207,7 +1214,7 @@ contains
                     allocate(vs%x(vs%dim(1)))
                     allocate(vs%y(vs%dim(2)))
                     allocate(vs%z(vs%dim(3)))
-                    allocate(vs%var(vs%dim(1),vs%dim(2),vs%dim(3),1))
+                    !allocate(vs%var(vs%dim(1),vs%dim(2),vs%dim(3),1))
 
                     if (nc_exists_var(filename_dims,dim_names(1))) then 
                         call nc_read(filename_dims,dim_names(1),vs%x)
@@ -1490,8 +1497,8 @@ contains
         
         ! Make sure at least one file was found
         if (ios /= 0) then
-            write(error_unit,*) "get_matching_files:: Error: No matching files found."
-            write(error_unit,*) "pattern = ", trim(pattern)
+            write(error_unit,*) "get_matching_files:: Error: temporary file could not be opened."
+            write(error_unit,*) "temp_filename = ", trim(temp_filename)
             stop
         end if
 
@@ -1504,6 +1511,13 @@ contains
             num_files = num_files + 1
         end do
         rewind(unit)
+
+        ! Make sure at least one file was found
+        if (num_files .eq. 0) then
+            write(error_unit,*) "get_matching_files:: Error: filename(s) not found."
+            write(error_unit,*) "filename = ", trim(pattern)
+            stop
+        end if
 
         ! Allocate the output array
         if (allocated(filenames)) deallocate(filenames)
