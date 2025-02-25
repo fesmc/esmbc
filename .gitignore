@@ -1,10 +1,11 @@
 Makefile
 ice_data
+data
+maps
 fobos
 *.o
 *.mod
 *.a
 *.x
 *.dSYM
-data
 *.nc
