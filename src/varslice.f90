@@ -61,7 +61,7 @@ module varslice
     public :: varslice_end 
 
     public :: varslice_map_to_grid
-    
+
     public :: print_var_range
     
 contains
@@ -269,6 +269,9 @@ contains
 
             ! 2. Read variable and convert units as needed
 
+            ! Make sure var variable is deallocated and ready to be modified
+            if (allocated(var)) deallocate(var) 
+
             if (.not. with_time) then 
                 ! Handle cases that do not have time dimension (simpler)
 
@@ -276,15 +279,24 @@ contains
 
                     case(1)
 
+                        ! Allocate var to the right size 
+                        allocate(vs%var(vs%dim(1),1,1,1))
+
                         ! 1D variable
                         call nc_read(par%filename,par%name,vs%var(:,1,1,1),missing_value=mv)
 
                     case(2)
 
+                        ! Allocate var to the right size 
+                        allocate(vs%var(vs%dim(1),vs%dim(2),1,1))
+
                         ! 2D variable 
                         call nc_read(par%filename,par%name,vs%var(:,:,1,1),missing_value=mv)
 
                     case(3)
+
+                        ! Allocate var to the right size 
+                        allocate(vs%var(vs%dim(1),vs%dim(2),vs%dim(3),1))
 
                         ! 3D variable 
                         call nc_read(par%filename,par%name,vs%var(:,:,:,1),missing_value=mv)
@@ -352,9 +364,6 @@ contains
                         ! write(*,*) "time: ", vs%time_range, k0, k1 
                         ! write(*,*) "      ", vs%time(k0), vs%time(k1)
                     end if
-                        
-                    ! Make sure var variable is deallocated and ready to be modified
-                    if (allocated(var)) deallocate(var) 
 
                     select case(par%ndim)
 
@@ -1400,24 +1409,24 @@ contains
 
     end subroutine axis_init
 
-    subroutine print_var_range(var,name,mv,time)
+    subroutine print_var_range(var,name,missing_value,time)
 
         implicit none 
 
         real(wp),         intent(IN) :: var(:,:,:,:) 
         character(len=*), intent(IN) :: name
-        real(wp),         intent(IN) :: mv 
+        real(wp),         intent(IN) :: missing_value 
         real(wp), intent(IN), optional :: time 
 
         ! Local variables 
         real(wp) :: vmin, vmax 
 
-        if (count(var.ne.mv) .gt. 0) then 
-            vmin = minval(var,mask=var.ne.mv)
-            vmax = maxval(var,mask=var.ne.mv)
+        if (count(var.ne.missing_value) .gt. 0) then 
+            vmin = minval(var,mask=var.ne.missing_value)
+            vmax = maxval(var,mask=var.ne.missing_value)
         else 
-            vmin = mv 
-            vmax = mv 
+            vmin = missing_value 
+            vmax = missing_value 
         end if 
 
         if (present(time)) then 

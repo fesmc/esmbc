@@ -654,9 +654,11 @@ contains
 
             write(error_unit,*) ""
             write(error_unit,*) "map_scrip_init:: Error: scrip map file not found. &
-                        &This file should be pregenerated using cdo before running Yelmo. &
-                        &See maps/readme.md in the main Yelmo directory for details."
+                        &This file should be pregenerated using cdo at the command line. &
+                        &See maps/readme.md for details."
             write(error_unit,*) "scrip map filename: ", trim(filename)
+            write(error_unit,*) "scrip map grid_name_src: ", trim(grid_name_src)
+            write(error_unit,*) "scrip map grid_name_tgt: ", trim(grid_name_tgt)
         end if 
 
         return 
