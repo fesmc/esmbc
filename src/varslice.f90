@@ -325,52 +325,35 @@ contains
                             allocate(var(nt_tot,1,1,1))
 
                             ! 0D (point) variable plus time dimension
-if (.FALSE.) then
-                            call nc_read(par%filename,par%name,var,missing_value=mv, &
-                                    start=[k0],count=[nt_tot])
-else
                             call nc_read_multifile(par%filenames,par%name,var,missing_value=mv, &
                                     start=[k0],count=[nt_tot])
-end if
+
                         case(2)
 
                             ! Allocate local var to the right size 
                             allocate(var(vs%dim(1),nt_tot,1,1))
 
                             ! 1D variable plus time dimension
-if (.FALSE.) then 
-                            call nc_read(par%filename,par%name,var,missing_value=mv, &
-                                    start=[1,k0],count=[vs%dim(1),nt_tot])
-else
                             call nc_read_multifile(par%filenames,par%name,var,missing_value=mv, &
                                     start=[1,k0],count=[vs%dim(1),nt_tot])
-end if
+
                         case(3)
         
                             ! Allocate local var to the right size 
                             allocate(var(vs%dim(1),vs%dim(2),nt_tot,1))
 
                             ! 2D variable plus time dimension
-if (.FALSE.) then 
-                            call nc_read(par%filename,par%name,var,missing_value=mv, &
-                                    start=[1,1,k0],count=[vs%dim(1),vs%dim(2),nt_tot])
-else
                             call nc_read_multifile(par%filenames,par%name,var,missing_value=mv, &
                                     start=[1,1,k0],count=[vs%dim(1),vs%dim(2),nt_tot])
-end if
+
                         case(4)
 
                             ! Allocate local var to the right size 
                             allocate(var(vs%dim(1),vs%dim(2),vs%dim(3),nt_tot))
 
                             ! 3D variable plus time dimension
-if (.FALSE.) then
-                            call nc_read(par%filename,par%name,var,missing_value=mv, &
-                                    start=[1,1,1,k0],count=[vs%dim(1),vs%dim(2),vs%dim(3),nt_tot])
-else
                             call nc_read_multifile(par%filenames,par%name,var,missing_value=mv, &
                                     start=[1,1,1,k0],count=[vs%dim(1),vs%dim(2),vs%dim(3),nt_tot])
-end if
 
                         case DEFAULT 
 
