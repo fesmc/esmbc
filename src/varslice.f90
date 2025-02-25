@@ -628,6 +628,15 @@ contains
                 else 
                     ! Dimension range was not found, set variable to missing values 
 
+                    select case(par%ndim)
+                        case(1)
+                            allocate(vs%var(vs%dim(1),1,1,1))
+                        case(2)
+                            allocate(vs%var(vs%dim(1),vs%dim(2),1,1))
+                        case(3)
+                            allocate(vs%var(vs%dim(1),vs%dim(2),vs%dim(3),1))
+                    end select
+
                     vs%var = mv 
 
                 end if

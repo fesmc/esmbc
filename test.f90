@@ -67,7 +67,7 @@ if (.TRUE.) then
     call map_scrip_init(mps,"ERA5","ANT-32KM",method="con",fldr="maps",load=.TRUE.)
 
     ! Update data
-    call varslice_update(v1, [1950.0_wp,1960.0_wp],method="range_mean",rep=12,print_summary=.TRUE.)
+    call varslice_update(v1, [1950.0_wp,1954.0_wp],method="range_mean",rep=12,print_summary=.TRUE.)
     
     ! Map to target grid
     call varslice_map_to_grid(vmp1,v1,mps,method="mean",missing_value=mv)
