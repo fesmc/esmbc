@@ -5,4 +5,6 @@ fobos
 *.mod
 *.a
 *.x
-&x.dSYM
+*.dSYM
+data
+*.nc
