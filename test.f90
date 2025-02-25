@@ -49,6 +49,8 @@ if (.TRUE.) then
     
     call varslice_init_nml(v1,"par/varslice.nml",group="var1")
     
+    call varslice_update(v1, [1950.0_wp,1960.0_wp],method="range_mean",rep=12,print_summary=.TRUE.)
+    
 end if
 
 

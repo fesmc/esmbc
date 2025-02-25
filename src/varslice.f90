@@ -309,6 +309,14 @@ contains
 
                     if (allocated(var)) deallocate(var) 
 
+
+
+
+                    ! TO DO: read from multiple files as needed...
+            
+
+
+
                     select case(par%ndim)
 
                         case(1)
@@ -335,7 +343,10 @@ contains
                             allocate(var(vs%dim(1),vs%dim(2),nt_tot,1))
 
                             ! 2D variable plus time dimension 
-                            call nc_read(par%filename,par%name,var,missing_value=mv, &
+                            ! call nc_read(par%filename,par%name,var,missing_value=mv, &
+                            !         start=[1,1,k0],count=[vs%dim(1),vs%dim(2),nt_tot])
+
+                            call nc_read_multifile_3D(par%filenames,par%name,var,missing_value=mv, &
                                     start=[1,1,k0],count=[vs%dim(1),vs%dim(2),nt_tot])
 
                         case(4)
@@ -597,6 +608,75 @@ contains
         return 
 
     end subroutine varslice_update
+
+    
+    subroutine nc_read_multifile_3D(filenames,name,var,start,count,missing_value)
+
+        implicit none
+
+        
+        character (len=*),  intent(IN)      :: filenames(:)
+        character (len=*),  intent(IN)      :: name
+        real(wp),           intent(INOUT)   :: var(:,:,:,:)
+        integer,            intent(IN), optional :: start(:)
+        integer,            intent(IN), optional :: count(:)
+        real(wp),           intent(IN), optional :: missing_value
+
+        ! Local variables
+        integer :: i, k0, nk, j0, nj, nt, num_files
+        integer, allocatable :: nt_files(:)
+        integer, allocatable :: dims(:)
+        character(len=1024) :: filename
+
+        num_files = size(filenames)
+        allocate(nt_files(num_files))
+
+        ! First determine dimension of each file
+        do i = 1, num_files
+            call nc_dims(filenames(i),name,dims=dims)
+            nt_files(i) = dims(size(dims,1))
+        end do
+
+        ! Consistency check
+        if (sum(nt_files) .ne. count(size(count,1))) then
+            write(error_unit,*) "nc_read_multifile:: Error: number of time axis values read in &
+            &do not much the expected total."
+            write(error_unit,*) "count: ", count
+            write(error_unit,*) "nt_files: ", sum(nt_files)
+            do i = 1, num_files
+                write(error_unit,*) trim(filenames(i)), nt_files(i)
+            end do
+            stop
+        end if
+
+        ! To do: figure out where index k0 begins within nt_files.
+        k0 = start(size(start,1))
+        nk = 0
+        j0 = 0
+        do i = 1, num_files
+            nk = nk + nt_files(i)       ! count maximum available including this file
+            if (k0 .le. nk) then
+                j0 = k0 - j0            ! start index for current file
+                nj = nk - k0 + 1        ! count total from current file
+                write(*,*) "j: ", j0, nj, k0, nk
+                call nc_read(filenames(i),name,var(:,:,k0:nk,1),missing_value=missing_value, &
+                                        start=[start(1),start(2),j0],count=[count(1),count(2),nj])
+                k0 = k0 + nj            ! start index for whole dimension over all files
+                j0 = nk                 ! reset j0 index to end of current total
+            end if
+        end do
+
+        if (nk .ne. count(3)) then
+            write(error_unit,*) "nc_read_multifile:: Error: number of time axis values read in &
+            &do not much the expected total."
+            write(error_unit,*) "count: ", count
+            write(error_unit,*) "nk: ", nk
+            stop
+        end if
+
+        return
+
+    end subroutine nc_read_multifile_3D
 
     subroutine get_indices(idx, x, xrange, slice_method, with_sub)
         ! Get indices in range x0 <= x <= x1
